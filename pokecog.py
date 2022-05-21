@@ -8,17 +8,17 @@ class PokeCog(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def startsearch(self, ctx: commands.Context, pokemon: str):
-        global spam_loop
+    async def startsearch(self, ctx, pokemon: str):
+        # global spam_loop
 
-        @tasks.loop(seconds=1)
-        async def spam_loop(q):
-            await ctx.send(q)
+        # @tasks.loop(seconds=1)
+        # async def spam_loop(q):
+        #     await ctx.send(q)
 
-        spam_loop.start(pokemon)
-        await ctx.send("Now spamming " + str(pokemon))
+        # spam_loop.start(pokemon)
+        await ctx.send("Now spamming " + pokemon)
 
-    @commands.command()
-    async def stopsearch(self, ctx: commands.Context):
-        spam_loop.cancel()
-        await ctx.send("Stopped spamming")
+    # @commands.command()
+    # async def stopsearch(self, ctx: commands.Context):
+    #     spam_loop.cancel()
+    #     await ctx.send("Stopped spamming")
