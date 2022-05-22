@@ -23,8 +23,3 @@ class SpamCog(commands.Cog):
         spam_loop.cancel()
         await ctx.send("Stopped spamming")
        
-    @commands.command()
-    async def fuckbrian(self, ctx):
-        message = ctx.message
-        emoji = '\N{THUMBS UP SIGN}'
-        await ctx.send("User: " + ctx.author +  "Hey Brian, fuck you!")
