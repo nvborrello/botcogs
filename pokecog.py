@@ -25,4 +25,4 @@ class PokeCog(commands.Cog):
        
     @commands.command()
     async def fuckbrian(self, ctx):
-        await ctx.send("Hey Brian, fuck you!")
+        await ctx.send("User: " + ctx.author +  "Hey Brian, fuck you!")
