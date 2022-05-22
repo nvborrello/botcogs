@@ -1,22 +1,22 @@
 from redbot.core import commands
 from discord.ext import tasks
 
-class PokeCog(commands.Cog):
+class SpamCog(commands.Cog):
     """My custom cog"""
 
     def __init__(self, bot):
         self.bot = bot
 
     @commands.command()
-    async def spam(self, ctx, pokemon: str):
+    async def spam(self, ctx, spam: str):
         global spam_loop
 
         @tasks.loop(seconds=1)
         async def spam_loop(q):
             await ctx.send(q)
 
-        spam_loop.start(pokemon)
-        await ctx.send("Now spamming " + pokemon)
+        spam_loop.start(spam)
+        await ctx.send("Now spamming " + spam)
 
     @commands.command()
     async def stopspam(self, ctx):
