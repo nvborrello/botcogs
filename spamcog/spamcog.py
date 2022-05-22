@@ -25,4 +25,6 @@ class SpamCog(commands.Cog):
        
     @commands.command()
     async def fuckbrian(self, ctx):
-        await ctx.send("Hey Brian, fuck you!")
+        message = ctx.message
+        emoji = '\N{THUMBS UP SIGN}'
+        await ctx.send("User: " + ctx.author +  "Hey Brian, fuck you!")
