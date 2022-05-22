@@ -28,4 +28,3 @@ class PokeCog(commands.Cog):
         message = ctx.message
         emoji = '\N{THUMBS UP SIGN}'
         await ctx.send("User: " + ctx.author +  "Hey Brian, fuck you!")
-        await message.pin
