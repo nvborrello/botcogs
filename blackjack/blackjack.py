@@ -51,13 +51,6 @@ class BlackJack(commands.Cog):
 
                     await ctx.send(f'Your Cards:\n{playerCards}\n')
                     await ctx.send("\nWould you like to draw another card? (y/n)")
-
-                    msg = self.wait_for("message", check=check)
-
-                    if 'y' or 'Y' in msg.content:
-                        gameMode = 'Continue'
-                    else:
-                        await ctx.send(f'Your Cards:\n{playerCards}\n')
                         
                 case 'Continue':
                     player = random.sample(deck, 1)
