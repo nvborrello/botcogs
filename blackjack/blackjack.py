@@ -45,6 +45,7 @@ class BlackJack(commands.Cog):
                 deck.remove(house[1])
 
                 await ctx.send(f'Your Cards:\n{playerCards}\n')
+                time.sleep(1)
                 await ctx.send("\nWould you like to draw another card? (y/n)")
                 msg = await self.wait_for('message', check=check, timeout=10)
 
@@ -58,6 +59,7 @@ class BlackJack(commands.Cog):
                 deck.remove(player[0])
                 playerCards.append(player[0].toString())
                 await ctx.send(f'Your Cards:\n{playerCards}\n')
+                time.sleep(1)
                 await ctx.send("\nWould you like to draw another card? (y/n)")
                 msg = await self.wait_for('message', check=check, timeout=10)
                 # if msg.content == 'y' or 'Y':
