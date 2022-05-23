@@ -5,6 +5,9 @@ import time
 
 deck = []
 
+def check(m):
+    return m.author == ctx.author and m.channel == ctx.channel
+
 class Card:
     def __init__(self, suit, val):
         self.suit = suit
