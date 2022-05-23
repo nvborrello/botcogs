@@ -28,11 +28,6 @@ class BlackJack(commands.Cog):
         deck = Deck()
         deck.build
         user = ctx.author
+        print(deck)
         await ctx.send(f'Starting a game of Blackjack...\n {user} has bet ${bet}')
-
-        yourcards = random.sample(deck.cards, 2)
-        print("Selected " + yourcards[0])
-        await ctx.send(f'Your cards are {yourcards[0]} and {yourcards[1]}')
-        reply = await self.wait_for("message")
-
        
