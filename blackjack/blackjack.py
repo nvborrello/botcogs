@@ -1,4 +1,5 @@
 import math
+from tkinter.messagebox import RETRY
 from redbot.core import commands
 from discord.ext import tasks
 import random
@@ -13,7 +14,8 @@ class Card:
     def show(self):
         value = str(self.value)
         suit = str(self.suit)
-        return("{value} of {suit}")
+        string = (value + " of " + suit)
+        return string
 
 for s in ["Spades", "Clubs", "Diamonds", "Hearts"]:
     for v in range(1, 14):
