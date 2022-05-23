@@ -11,20 +11,7 @@ class Card:
 
 for s in ["Spades", "Clubs", "Diamonds", "Hearts"]:
     for v in range(1, 14):
-        stringy = ''
-        if v > 10:
-            match (v-10):
-                case 1:
-                    stringy = 'Ace'
-                case 2:
-                    stringy = 'King'
-                case 3:
-                    stringy = 'Queen'
-                case 4:
-                    stringy = 'Jack'
-        else:
-            stringy = v
-        deck.append(Card(s, stringy))
+        deck.append(Card(s, v))
 
 
 class BlackJack(commands.Cog):
