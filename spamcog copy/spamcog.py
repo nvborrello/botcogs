@@ -8,7 +8,7 @@ class SpamCog(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def startspam(self, ctx, spam: str):
+    async def spam(self, ctx, spam: str):
         global spam_loop
 
         @tasks.loop(seconds=1)
