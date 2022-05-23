@@ -10,7 +10,7 @@ class Card:
         self.value = val
 
     def toString(self):
-        if self.value > 10:
+        if int(self.value) > 10:
             newValue = ''
             i = self.value - 10
             match i:
