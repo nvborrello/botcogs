@@ -28,24 +28,45 @@ class BlackJack(commands.Cog):
     async def blackjack(self, ctx, bet: int):
         user = ctx.author
         await ctx.send(f'Starting a game of Blackjack...\n {user} has bet ${bet}')
-        gameMode = 1
+        gameMode = 'Draw'
         gameActive = True
+        playerCards = []
 
         while gameActive:
-            await ctx.send('Hello')
-            time.sleep(1)
-            # match gameMode:
-            #     case 1:
-            #         player = random.sample(deck, 2)
-            #         str1 = player[0].toString()
-            #         str2 = player[1].toString()
+            match gameMode:
+                case 'Draw':
+                    player = random.sample(deck, 2)
+                    str1 = player[0].toString()
+                    str2 = player[1].toString()
+                    deck.remove(player[0])
+                    deck.remove(player[1])
+                    playerCards.append(player[0])
+                    playerCards.append(player[1])
 
-            #         house = random.sample(deck, 2)
-            #         str3 = house[0].toString()
-            #         str4 = house[1].toString()
+                    house = random.sample(deck, 2)
+                    str3 = house[0].toString()
+                    str4 = house[1].toString()
+                    deck.remove(house[0])
+                    deck.remove(house[1])
 
-            #         await ctx.send(f'Your Cards:\nCard 1: {str1}\nCard 2: {str2}\n')
-            #         await ctx.send(f'Dealer\'s Cards:\nCard 1: {str3}\nCard 2: {str4}')
+                    await ctx.send(f'Your Cards:\n{playerCards}\n')
+                    await ctx.send("\nWould you like to draw another card? (y/n)")
+
+                    msg = self.wait_for("message", check=check)
+
+                    if 'y' or 'Y' in msg.content:
+                        gameMode = 'Continue'
+                    else:
+                        await ctx.send(f'Your Cards:\n{playerCards}\n')
+                        
+                case 'Continue':
+                    player = random.sample(deck, 1)
+                    deck.remove(player[0])
+                    playerCards.append(player[0])
+                    await ctx.send(f'Your Cards:\n{playerCards}\n')
+
+
+
 
 
 
