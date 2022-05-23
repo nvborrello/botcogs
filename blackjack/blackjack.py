@@ -11,12 +11,6 @@ class Card:
         self.suit = suit
         self.value = val
 
-    def show(self):
-        value = str(self.value)
-        suit = str(self.suit)
-        string = f'{value} of {suit}'
-        return string
-
 for s in ["Spades", "Clubs", "Diamonds", "Hearts"]:
     for v in range(1, 14):
         deck.append(Card(s, v))
@@ -33,8 +27,6 @@ class BlackJack(commands.Cog):
         user = ctx.author
         await ctx.send(f'Starting a game of Blackjack...\n {user} has bet ${bet}')
         drawn = random.sample(deck, 2)
-        string1 = drawn[0].show()
-        string2 = drawn[1].show()
-        await ctx.send(f'Card 1: {string1}\nCard 2: {string2}')
+        await ctx.send(f'Card 1: {drawn[0].value} of {drawn[0].suit}\nCard 2: {drawn[1].value} of {drawn[1].suit}')
 
        
