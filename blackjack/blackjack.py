@@ -33,28 +33,25 @@ class BlackJack(commands.Cog):
         playerCards = []
 
         while gameActive:
-            match gameMode:
-                case 'Draw':
-                    await ctx.send('Hello')
-                #     player = random.sample(deck, 2)
-                #     deck.remove(player[0])
-                #     deck.remove(player[1])
-                #     playerCards.append(player[0])
-                #     playerCards.append(player[1])
+            if gameMode == 'Draw':
+                player = random.sample(deck, 2)
+                deck.remove(player[0])
+                deck.remove(player[1])
+                playerCards.append(player[0])
+                playerCards.append(player[1])
 
-                #     house = random.sample(deck, 2)
-                #     deck.remove(house[0])
-                #     deck.remove(house[1])
+                house = random.sample(deck, 2)
+                deck.remove(house[0])
+                deck.remove(house[1])
 
-                #     await ctx.send(f'Your Cards:\n{playerCards}\n')
-                #     await ctx.send("\nWould you like to draw another card? (y/n)")
-                        
-                # case 'Continue':
-                #     player = random.sample(deck, 1)
-                #     deck.remove(player[0])
-                #     playerCards.append(player[0])
-                #     await ctx.send(f'Your Cards:\n{playerCards}\n')
-
+                await ctx.send(f'Your Cards:\n{playerCards}\n')
+                await ctx.send("\nWould you like to draw another card? (y/n)") 
+                       
+            if gameMode == 'Continue':
+                player = random.sample(deck, 1)
+                deck.remove(player[0])
+                playerCards.append(player[0])
+                await ctx.send(f'Your Cards:\n{playerCards}\n')
 
 
 
