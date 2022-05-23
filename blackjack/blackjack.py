@@ -37,22 +37,36 @@ class BlackJack(commands.Cog):
                 player = random.sample(deck, 2)
                 deck.remove(player[0])
                 deck.remove(player[1])
-                playerCards.append(player[0])
-                playerCards.append(player[1])
+                playerCards.append(player[0].toString())
+                playerCards.append(player[1].toString())
 
                 house = random.sample(deck, 2)
                 deck.remove(house[0])
                 deck.remove(house[1])
 
                 await ctx.send(f'Your Cards:\n{playerCards}\n')
-                await ctx.send("\nWould you like to draw another card? (y/n)") 
-                       
+                await ctx.send("\nWould you like to draw another card? (y/n)")
+                msg = await self.wait_for('message', check=check, timeout=10)
+
+                if msg.content == 'y' or 'Y':
+                    gameMode == 'Continue'
+                else:
+                    gameMode == 'Flip'
+
             if gameMode == 'Continue':
                 player = random.sample(deck, 1)
                 deck.remove(player[0])
-                playerCards.append(player[0])
+                playerCards.append(player[0].toString())
                 await ctx.send(f'Your Cards:\n{playerCards}\n')
-
+                await ctx.send("\nWould you like to draw another card? (y/n)")
+                msg = await self.wait_for('message', check=check, timeout=10)
+                if msg.content == 'y' or 'Y':
+                    gameMode == 'Continue'
+                else:
+                    gameMode == 'Flip'
+            
+            if gameMode == 'Flip':
+                await ctx.send(f'Your Cards:\n{playerCards}\n')
 
 
 
