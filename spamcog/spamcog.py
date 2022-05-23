@@ -8,7 +8,7 @@ class SpamCog(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def startspam(self, ctx, spam: str):
+    async def starttospam(self, ctx, spam: str):
         global spam_loop
 
         @tasks.loop(seconds=1)
@@ -19,7 +19,7 @@ class SpamCog(commands.Cog):
         await ctx.send("Now spamming " + spam)
 
     @commands.command()
-    async def stopspam(self, ctx):
+    async def stopthespam(self, ctx):
         spam_loop.cancel()
         await ctx.send("Stopped spamming")
        
