@@ -11,17 +11,7 @@ class Card:
 
     def toString(self):
         if int(self.value) > 10:
-            newValue = ''
-            i = self.value - 10
-            match i:
-                case 1:
-                    newValue = 'King'
-                case 2:
-                    newValue = 'Queen'
-                case 3:
-                    newValue = 'Ace'
-                case 4:
-                    newValue = 'Jack'
+            newValue = 'WILD'
             return (f'{newValue} of {self.suit}')
         else:
             return (f'{self.value} of {self.suit}')
