@@ -14,7 +14,7 @@ class Card:
     def show(self):
         value = str(self.value)
         suit = str(self.suit)
-        string = (value + " of " + suit)
+        string = f'{value} of {suit}'
         return string
 
 for s in ["Spades", "Clubs", "Diamonds", "Hearts"]:
