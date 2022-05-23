@@ -1,6 +1,7 @@
 from redbot.core import commands
 from discord.ext import tasks
 import random
+import time
 
 deck = []
 
@@ -31,6 +32,8 @@ class BlackJack(commands.Cog):
         gameActive = True
 
         while gameActive:
+            await ctx.send('Hello')
+            time.sleep(1)
             # match gameMode:
             #     case 1:
             #         player = random.sample(deck, 2)
