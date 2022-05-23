@@ -1,5 +1,3 @@
-import math
-from tkinter.messagebox import RETRY
 from redbot.core import commands
 from discord.ext import tasks
 import random
@@ -14,7 +12,7 @@ class Card:
 for s in ["Spades", "Clubs", "Diamonds", "Hearts"]:
     for v in range(1, 14):
         deck.append(Card(s, v))
-        
+
 class BlackJack(commands.Cog):
     """My custom cog"""
 
