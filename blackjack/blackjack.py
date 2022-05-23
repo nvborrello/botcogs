@@ -28,6 +28,6 @@ class BlackJack(commands.Cog):
         deck = Deck()
         deck.build
         user = ctx.author
-        print(deck)
+        await ctx.send(deck)
         await ctx.send(f'Starting a game of Blackjack...\n {user} has bet ${bet}')
        
