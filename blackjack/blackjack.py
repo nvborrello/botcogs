@@ -10,23 +10,8 @@ class Card:
         self.suit = suit
         self.value = val
 
-    def print(self):
-        curVal = int(self.value)
-        newValue = ''
-        if curVal > 10:
-            match (curVal-10):
-                case 1:
-                    newValue = 'King'
-                case 2:
-                    newValue = 'Queen'
-                case 3:
-                    newValue = 'Ace'
-                case 4:
-                    newValue = 'Jack'
-        else:
-            newValue = self.value
-        printer = f'{newValue} of {self.suit}'
-        return printer
+    def show(self):
+        return(f'{self.value} of {self.suit}')
 
 for s in ["Spades", "Clubs", "Diamonds", "Hearts"]:
     for v in range(1, 14):
@@ -44,6 +29,6 @@ class BlackJack(commands.Cog):
         user = ctx.author
         await ctx.send(f'Starting a game of Blackjack...\n {user} has bet ${bet}')
         drawn = random.sample(deck, 2)
-        await ctx.send(f'Card 1: {drawn[0].value} of {drawn[0].suit}\nCard 2: {drawn[1].value} of {drawn[1].suit}')
+        await ctx.send(f'Card 1: {drawn[0].show}\nCard 2: {drawn[1].show}')
 
        
