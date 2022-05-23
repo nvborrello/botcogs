@@ -11,7 +11,7 @@ class Card:
         self.value = val
 
     def show(self):
-        return(f'{str(self.value)} of {str(self.suit)}')
+        return('{} of {}'.format(self.value, self.suit))
 
 for s in ["Spades", "Clubs", "Diamonds", "Hearts"]:
     for v in range(1, 14):
