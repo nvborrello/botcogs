@@ -27,13 +27,12 @@ class BlackJack(commands.Cog):
     async def blackjack(self, ctx, bet: int):
         user = ctx.author
         await ctx.send(f'Starting a game of Blackjack...\n {user} has bet ${bet}')
-        gameMode = 0
+        gameMode = 1
         gameActive = True
 
         while gameActive:
             match gameMode:
                 case 1:
-
                     player = random.sample(deck, 2)
                     str1 = player[0].toString()
                     str2 = player[1].toString()
