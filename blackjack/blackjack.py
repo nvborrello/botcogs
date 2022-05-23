@@ -48,7 +48,11 @@ class BlackJack(commands.Cog):
                 time.sleep(1)
                 await ctx.send("\nWould you like to draw another card? (y/n)")
                 time.sleep(1)
+
+                def check(m):
+                    return m.author == ctx.author and m.channel == ctx.channel
                 msg = await self.bot.wait_for('message', check=check)
+                
                 if msg.content.lower in ("y", "yes"):
                     gameMode == 'Continue'
                 else:
