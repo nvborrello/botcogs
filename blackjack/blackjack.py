@@ -31,7 +31,8 @@ class BlackJack(commands.Cog):
         await ctx.send(f'Starting a game of Blackjack...\n {user} has bet ${bet}')
 
         yourcards = random.sample(deck.cards, 2)
-        await ctx.send(f'Your cards are {yourcards[0].val} of {yourcards[0].suit} and {yourcards[1].val} of {yourcards[1].suit}')
+        print("Selected " + yourcards[0])
+        await ctx.send(f'Your cards are {yourcards[0]} and {yourcards[1]}')
         reply = await self.wait_for("message")
 
        
