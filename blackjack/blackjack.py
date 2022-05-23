@@ -31,18 +31,18 @@ class BlackJack(commands.Cog):
         gameActive = True
 
         while gameActive:
-            match gameMode:
-                case 1:
-                    player = random.sample(deck, 2)
-                    # str1 = player[0].toString()
-                    # str2 = player[1].toString()
+            # match gameMode:
+            #     case 1:
+            #         player = random.sample(deck, 2)
+            #         str1 = player[0].toString()
+            #         str2 = player[1].toString()
 
-                    # house = random.sample(deck, 2)
-                    # str3 = house[0].toString()
-                    # str4 = house[1].toString()
+            #         house = random.sample(deck, 2)
+            #         str3 = house[0].toString()
+            #         str4 = house[1].toString()
 
-                    # await ctx.send(f'Your Cards:\nCard 1: {str1}\nCard 2: {str2}\n')
-                    # await ctx.send(f'Dealer\'s Cards:\nCard 1: {str3}\nCard 2: {str4}')
+            #         await ctx.send(f'Your Cards:\nCard 1: {str1}\nCard 2: {str2}\n')
+            #         await ctx.send(f'Dealer\'s Cards:\nCard 1: {str3}\nCard 2: {str4}')
 
 
 
