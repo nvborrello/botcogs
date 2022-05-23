@@ -10,7 +10,7 @@ class Card:
         self.value = val
 
     def toString(self):
-        if int(self.value) > 10:
+        if self.value > 10:
             newValue = 'WILD'
             return (f'{newValue} of {self.suit}')
         else:
