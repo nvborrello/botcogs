@@ -44,6 +44,6 @@ class BlackJack(commands.Cog):
         user = ctx.author
         await ctx.send(f'Starting a game of Blackjack...\n {user} has bet ${bet}')
         drawn = random.sample(deck, 2)
-        await ctx.send(f'Card 1: {drawn[0].print}\nCard 2: {drawn[1].print}')
+        await ctx.send(f'Card 1: {drawn[0].print()}\nCard 2: {drawn[1].print()}')
 
        
