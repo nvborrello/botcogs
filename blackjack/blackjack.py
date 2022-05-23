@@ -51,7 +51,7 @@ class BlackJack(commands.Cog):
                 time.sleep(1)
                 await ctx.send("\nWould you like to draw another card? (y/n)")
                 time.sleep(1)
-                msg = await self.wait_for("message", check=lambda m:m.author==ctx.author and m.channel.id==ctx.channel.id)
+                msg = await self.wait_for('message', check=check)
                 if msg.content.lower in ("y", "yes"):
                     gameMode == 'Continue'
                 else:
@@ -65,7 +65,7 @@ class BlackJack(commands.Cog):
                 time.sleep(1)
                 await ctx.send("\nWould you like to draw another card? (y/n)")
                 time.sleep(1)
-                msg = await self.wait_for('message', check=lambda x: x.author.id == ctx.author.id)
+                msg = await self.wait_for('message', check=check)
                 # if msg.content == 'y' or 'Y':
                 #     gameMode == 'Continue'
                 # else:
