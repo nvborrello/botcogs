@@ -28,8 +28,10 @@ class BlackJack(commands.Cog):
         drawn = random.sample(deck, 2)
         str1 = drawn[0].toString()
         str2 = drawn[1].toString()
-        await ctx.send(str1)
-        await ctx.send(str2)
-        await ctx.send(f'Card 1: {drawn[0].value} of {drawn[0].suit}\nCard 2: {drawn[1].value} of {drawn[1].suit}')
+        dealdrawn = random.sample(deck, 2)
+        str3 = dealdrawn[0].toString()
+        str4 = dealdrawn[1].toString()
+        await ctx.send(f'Your Cards:\nCard 1: {str1}\nCard 2: {str2}')
+        await ctx.send(f'Dealer\'s Cards:\nCard 1: {str3}\nCard 2: {str4}')
 
        
