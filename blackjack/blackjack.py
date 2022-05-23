@@ -10,8 +10,7 @@ class Card:
         self.value = val
 
     def toString(self):
-        newValue = 'WILD'
-        return (f'{newValue} of {self.suit}')
+        return (f'{self.value} of {self.suit}')
     
 
 for s in ["Spades", "Clubs", "Diamonds", "Hearts"]:
