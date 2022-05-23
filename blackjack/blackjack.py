@@ -5,9 +5,6 @@ import time
 
 deck = []
 
-def check(m):
-    return m.author == ctx.author and m.channel == ctx.channel
-
 class Card:
     def __init__(self, suit, val):
         self.suit = suit
@@ -51,7 +48,7 @@ class BlackJack(commands.Cog):
                 time.sleep(1)
                 await ctx.send("\nWould you like to draw another card? (y/n)")
                 time.sleep(1)
-                msg = await self.wait_for('message', check=check)
+                msg = await self.bot.wait_for('message', check=check)
                 if msg.content.lower in ("y", "yes"):
                     gameMode == 'Continue'
                 else:
