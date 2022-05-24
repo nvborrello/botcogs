@@ -101,8 +101,9 @@ class BlackJack(commands.Cog):
                 currentSum = getsum(playerCards)
 
                 # Send user their cards
-                await ctx.send(f'Your Cards:\n{stringList}\nTotal Value: {getsum(playerCards)}')
-                await ctx.send(f'My Cards:\n{hideList}')
+                playerClean = ', '.join(stringList)
+                botClean = ', '.join(hideList)
+                await ctx.send(f'**Your Cards:**\n{playerClean}\nTotal Value: {getsum(playerCards)}\n\n**My Cards:**\n{botClean}\nTotal Value: {getsum(botCards)}')
                 await ctx.send("\nWould you like to draw another card? (y/n)")
 
                 # Response Checker
@@ -133,7 +134,7 @@ class BlackJack(commands.Cog):
                 # Send player their cards
                 playerClean = ', '.join(stringList)
                 await ctx.send(f'You drew a {player[0].toString()}')
-                await ctx.send(f'Your Cards:\n{playerClean}\nTotal Value: {getsum(playerCards)}')
+                await ctx.send(f'**Your Cards**:\n{playerClean}\nTotal Value: {getsum(playerCards)}')
 
                 if currentSum > 21:
                     gameMode = 3
@@ -165,8 +166,7 @@ class BlackJack(commands.Cog):
                 # Send results
                 playerClean = ', '.join(stringList)
                 botClean = ', '.join(botList)
-                await ctx.send(f'Your Cards:\n\n{playerClean}\nTotal Value: {getsum(playerCards)}')
-                await ctx.send(f'My Cards:\n\n{botClean}\nTotal Value: {getsum(botCards)}')
+                await ctx.send(f'**Your Cards:**\n{playerClean}\nTotal Value: {getsum(playerCards)}\n\n**My Cards:**\n{botClean}\nTotal Value: {getsum(botCards)}')
                 if botScore > 21:
                     gameMode = 4
                     continue
