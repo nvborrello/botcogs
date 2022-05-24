@@ -79,7 +79,7 @@ class BlackJack(commands.Cog):
                     return m.author == ctx.author and m.channel == ctx.channel
                 msg = await self.bot.wait_for('message', check=check)
                 
-                if msg.content.lower in ("y", "yes"):
+                if msg.content in ("y", "yes"):
                     gameMode == 'Continue'
                     await ctx.send(f"\nYou said {msg.content.lower}, Gamemode = {gameMode}, it's supposed to be Continue")
                 else:
@@ -102,7 +102,7 @@ class BlackJack(commands.Cog):
                     return m.author == ctx.author and m.channel == ctx.channel
                 msg = await self.bot.wait_for('message', check=check)
 
-                if msg.content.lower in ("y", "yes"):
+                if msg.content in ("y", "yes"):
                     gameMode == 'Continue'
                     await ctx.send(f"\nGamemode = {gameMode}")
                 else:
