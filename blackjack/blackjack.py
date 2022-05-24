@@ -52,8 +52,14 @@ class BlackJack(commands.Cog):
                 deck.remove(house[0])
                 deck.remove(house[1])
 
+                # Create a list for the cards as strings
+                stringList = []
+                for card in playerCards:
+                    stringList.append(f'{card.value} of {card.suit}')
+
+
                 # Send user their cards
-                await ctx.send(f'Your Cards:\n{playerCards}\nTotal Value: {getsum(playerCards)}')
+                await ctx.send(f'Your Cards:\n{stringList}\nTotal Value: {getsum(playerCards)}')
                 time.sleep(1)
                 await ctx.send("\nWould you like to draw another card? (y/n)")
 
