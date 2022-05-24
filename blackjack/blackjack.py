@@ -41,6 +41,7 @@ class BlackJack(commands.Cog):
             # Game mode when the game is just starting
             if gameMode == 'Draw':
                 # Draw 2 cards for the player
+                await ctx.send("\nGamemode = Draw")
                 player = random.sample(deck, 2)
                 deck.remove(player[0])
                 deck.remove(player[1])
@@ -52,7 +53,7 @@ class BlackJack(commands.Cog):
                 deck.remove(house[1])
 
                 # Send user their cards
-                await ctx.send(f'Your Cards:\n{playerCards}\n')
+                await ctx.send(f'Your Cards:\n{playerCards}\nTotal Value: {getsum(playerCards)}')
                 time.sleep(1)
                 await ctx.send("\nWould you like to draw another card? (y/n)")
 
@@ -69,6 +70,7 @@ class BlackJack(commands.Cog):
             # Game mode if the player decides to draw another card
             if gameMode == 'Continue':
                 # Draw another card
+                await ctx.send("\nGamemode = Continue")
                 player = random.sample(deck, 1)
                 deck.remove(player[0])
                 playerCards.append(player[0].toString())
@@ -87,6 +89,7 @@ class BlackJack(commands.Cog):
                     gameMode == 'Flip'
             
             if gameMode == 'Flip':
+                await ctx.send("\nGamemode = Flip")
                 await ctx.send(f'Your Final Cards:\n{playerCards}\n')
                 break
 
