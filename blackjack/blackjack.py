@@ -5,7 +5,6 @@ from discord.ext import tasks
 import random
 
 deck = []
-gameMode = 'Draw'
 gameActive = True
 
 
@@ -42,14 +41,12 @@ class BlackJack(commands.Cog):
     async def blackjack(self, ctx):
         user = ctx.author
         await ctx.send(f'Starting a game of Blackjack with {user}')
-        global gameActive
-        global gameMode
+        gameMode = 'Draw'
 
         playerCards = []
 
         while gameActive:
             # Game mode when the game is just starting
-            currentMode = gameMode
             if currentMode == 'Draw':
                 # Draw 2 cards for the player
                 player = random.sample(deck, 2)
@@ -79,7 +76,7 @@ class BlackJack(commands.Cog):
                 
                 if msg.content.lower in ("y", "yes"):
                     gameMode == 'Continue'
-                    await ctx.send(f"\nGamemode = {gameMode}")
+                    await ctx.send(f"\nGamemode = {gameMode}, it's supposed to be Continue")
                 else:
                     gameMode == 'Flip'
                     await ctx.send(f"\nGamemode = {gameMode}")
