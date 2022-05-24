@@ -11,12 +11,13 @@ deck = []
 
 
 class Card:
-    def __init__(self, suit, val):
+    def __init__(self, suit: str, val: int):
         self.suit = suit
         self.value = val
 
     def toString(self):
-        match self.value:
+        matcher = self.value
+        match matcher:
             case 1:
                 return (f'Ace of {self.suit}')
             case 11:
