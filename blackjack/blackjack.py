@@ -18,13 +18,11 @@ def getsum(cards):
     sum = 0
     hasAce = False
     for card in cards:
-        if isinstance(card.value, str):
-            if card.value == 'Ace':
-                sum+=11
-            else:
-                sum+=10
-        else:
-            sum+= card.value
+        sum+= card.points
+        if card.value == 'Ace':
+            hasAce = True
+    if hasAce and sum <= 11:
+        sum+=10
     return sum
 
 for s in ["Spades", "Clubs", "Diamonds", "Hearts"]:
