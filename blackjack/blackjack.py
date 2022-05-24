@@ -103,7 +103,9 @@ class BlackJack(commands.Cog):
                 # Send user their cards
                 playerClean = ', '.join(stringList)
                 botClean = ', '.join(hideList)
+                await ctx.send(f'You drew a {player[0].toString()} and a {player[1].toString()}')
                 await ctx.send(f'**Your Cards:**\n{playerClean}\nTotal Value: {getsum(playerCards)}\n\n**My Cards:**\n{botClean}\nTotal Value: ?')
+                await ctx.send(f'*{len(deck)} cards in the deck...*')
                 await ctx.send("\nWould you like to draw another card? (y/n)")
 
                 # Response Checker
@@ -134,6 +136,7 @@ class BlackJack(commands.Cog):
                 # Send player their cards
                 playerClean = ', '.join(stringList)
                 await ctx.send(f'You drew a {player[0].toString()}')
+                await ctx.send(f'*{len(deck)} cards in the deck...*')
                 await ctx.send(f'**Your Cards**:\n{playerClean}\nTotal Value: {getsum(playerCards)}')
 
                 if currentSum > 21:
@@ -166,6 +169,7 @@ class BlackJack(commands.Cog):
                 # Send results
                 playerClean = ', '.join(stringList)
                 botClean = ', '.join(botList)
+                await ctx.send(f'*{len(deck)} cards in the deck...*')
                 await ctx.send(f'**Your Cards:**\n{playerClean}\nTotal Value: {getsum(playerCards)}\n\n**My Cards:**\n{botClean}\nTotal Value: {getsum(botCards)}')
 
                 # Have dealer draw if under 17
