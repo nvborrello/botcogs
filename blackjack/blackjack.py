@@ -1,6 +1,7 @@
 from redbot.core import commands
 from discord.ext import tasks
 import random
+import time
 
 deck = []
 
@@ -54,8 +55,6 @@ class BlackJack(commands.Cog):
     async def blackjack(self, ctx):
         user = ctx.author.mention
         await ctx.send(f'*Starting a game of Blackjack with {user}*')
-        await ctx.send(f'*{len(deck)} cards in the deck...*')
-
         
         gameMode = 0
         rounds = 0
@@ -103,9 +102,8 @@ class BlackJack(commands.Cog):
                 # Send user their cards
                 playerClean = ', '.join(stringList)
                 botClean = ', '.join(hideList)
-                await ctx.send(f'You drew a {player[0].toString()} and a {player[1].toString()}')
-                await ctx.send(f'**Your Cards:**\n{playerClean}\nTotal Value: {getsum(playerCards)}\n\n**My Cards:**\n{botClean}\nTotal Value: ?')
-                await ctx.send(f'*{len(deck)} cards in the deck...*')
+                await ctx.send(f'*You drew a {player[0].toString()} and a {player[1].toString()}*')
+                await ctx.send(f'**Your Cards:**\n{playerClean}\nTotal Value: {getsum(playerCards)}\n\n**Bruno\'s Cards:**\n{botClean}\nTotal Value: ?')
                 await ctx.send("\nWould you like to draw another card? (y/n)")
 
                 # Response Checker
@@ -135,8 +133,7 @@ class BlackJack(commands.Cog):
 
                 # Send player their cards
                 playerClean = ', '.join(stringList)
-                await ctx.send(f'You drew a {player[0].toString()}')
-                await ctx.send(f'*{len(deck)} cards in the deck...*')
+                await ctx.send(f'*You drew a {player[0].toString()}*')
                 await ctx.send(f'**Your Cards**:\n{playerClean}\nTotal Value: {getsum(playerCards)}')
 
                 if currentSum > 21:
@@ -169,18 +166,17 @@ class BlackJack(commands.Cog):
                 # Send results
                 playerClean = ', '.join(stringList)
                 botClean = ', '.join(botList)
-                await ctx.send(f'*{len(deck)} cards in the deck...*')
-                await ctx.send(f'**Your Cards:**\n{playerClean}\nTotal Value: {getsum(playerCards)}\n\n**My Cards:**\n{botClean}\nTotal Value: {getsum(botCards)}')
+                await ctx.send(f'**Your Cards:**\n{playerClean}\nTotal Value: {getsum(playerCards)}\n\n**Bruno\'s Cards:**\n{botClean}\nTotal Value: {getsum(botCards)}')
 
                 # Have dealer draw if under 17
                 if botScore < 17:
                     while True:
                         # have the bot draw a card
-                        await ctx.send(f'*My sum below 17, drawing again...*')
+                        await ctx.send(f'*Bruno\'s sum is below 17, drawing again...*')
                         bot = random.sample(deck, 1)
                         deck.remove(bot[0])
                         botCards.append(bot[0])
-                        await ctx.send(f'I drew a {bot[0].toString()}\nTotal Value: {getsum(botCards)}')
+                        await ctx.send(f'*Bruno drew a {bot[0].toString()}*\nTotal Value: {getsum(botCards)}')
 
                         # Recalculate the bots score
                         botScore = getsum(botCards)
@@ -195,7 +191,7 @@ class BlackJack(commands.Cog):
                 playerFinal = getsum(playerCards) 
                 botFinal = getsum(botCards)
                 if botFinal > playerFinal:
-                    await ctx.send('**You Lost...**')
+                    await ctx.send('**Bruno Wins!**')
                 elif botFinal < playerFinal:
                     await ctx.send('**You win!**')
                 elif botFinal == playerFinal:
@@ -204,12 +200,12 @@ class BlackJack(commands.Cog):
 
             # Player went over 21
             if gameMode == 3:
-                await ctx.send('**You went over 21! You lose!**')
+                await ctx.send('**You went over 21! Bruno wins!**')
                 break
 
             # Bot went over 21
             if gameMode == 4:
-                await ctx.send('**Bot went over 21! You win!**')
+                await ctx.send('**Bruno went over 21! You win!**')
                 break
 
 
