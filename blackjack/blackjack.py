@@ -1,8 +1,3 @@
-from email.policy import default
-from glob import glob
-from tkinter.tix import Tree
-from turtle import getshapes
-from webbrowser import get
 from redbot.core import commands
 from discord.ext import tasks
 import random
@@ -59,9 +54,6 @@ class BlackJack(commands.Cog):
     async def blackjack(self, ctx):
         user = ctx.author
         await ctx.send(f'Starting a game of Blackjack with {user}')
-
-        for card in deck:
-            await ctx.send(card.toString())
         
         await ctx.send(len(deck))
 
@@ -139,6 +131,7 @@ class BlackJack(commands.Cog):
                 currentSum = getsum(playerCards)
 
                 # Send player their cards
+                await ctx.send(f'You drew a {player[0].toString()}')
                 await ctx.send(f'Your Cards:\n{stringList}\nTotal Value: {getsum(playerCards)}')
 
                 if currentSum > 21:
@@ -166,9 +159,35 @@ class BlackJack(commands.Cog):
                 for card in playerCards:
                     stringList.append(card.toString())
 
-                # Send final results
-                await ctx.send(f'Your Final Cards:\n{stringList}\n')
-                await ctx.send(f'My Final Cards:\n{botList}\n')
+                botScore = getsum(botCards)
+
+                # Send results
+                await ctx.send(f'Your Final Cards:\n{stringList}\nTotal Value: {getsum(playerCards)}')
+                await ctx.send(f'My Final Cards:\n{botList}\nTotal Value: {getsum(botCards)}')
+                if botScore > 21:
+                    gameMode = 4
+                    continue
+
+                # Have dealer draw if under 17
+                if botScore < 17:
+                    await ctx.send(f'My sum below 17, drawing again...')
+                    botLoop = True
+                    while True:
+
+                        # have the bot draw a card
+                        bot = random.sample(deck, 1)
+                        deck.remove(bot[0])
+                        botCards.append(bot[0])
+                        await ctx.send(f'I drew a {bot[0].toString()}\nTotal Value: {getsum(botCards)}')
+
+                        # Recalculate the bots score
+                        botScore = getsum(botCards)
+                        if botScore > 21:
+                            gameMode = 4
+                            break
+                        elif botScore > 16:
+                            break
+
 
                 # Determine Winner
                 playerFinal = getsum(playerCards) 
@@ -182,6 +201,11 @@ class BlackJack(commands.Cog):
             # Player went over 21
             if gameMode == 3:
                 await ctx.send('You went over 21! You lose!')
+                break
+
+            # Bot went over 21
+            if gameMode == 4:
+                await ctx.send('Bot went over 21! You win!')
                 break
 
 
