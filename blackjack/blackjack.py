@@ -173,11 +173,9 @@ class BlackJack(commands.Cog):
 
                 # Have dealer draw if under 17
                 if botScore < 17:
-                    await ctx.send(f'My sum below 17, drawing again...')
-                    botLoop = True
                     while True:
-
                         # have the bot draw a card
+                        await ctx.send(f'My sum below 17, drawing again...')
                         bot = random.sample(deck, 1)
                         deck.remove(bot[0])
                         botCards.append(bot[0])
