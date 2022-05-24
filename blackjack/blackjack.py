@@ -34,12 +34,12 @@ def updateDict(userID, winBool):
         if userID in winloss:
             winloss[userID]['Wins']+=1
         else:
-            winloss[userID]['Wins'] = 1
+            winloss.update({userID: {'Wins': 1, 'Losses': 0}})
     elif not winBool:
         if userID in winloss:
             winloss[userID]['Losses']+=1
         else:
-            winloss[userID]['Losses'] = 1
+            winloss.update({userID: {'Wins': 0, 'Losses': 1}})
 
 for s in ["Spades", "Clubs", "Diamonds", "Hearts"]:
     for v in range(1, 14):
