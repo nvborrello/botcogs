@@ -1,9 +1,13 @@
+from glob import glob
 from redbot.core import commands
 from discord.ext import tasks
 import random
 import time
 
 deck = []
+gameMode = 'Draw'
+gameActive = True
+
 
 class Card:
     def __init__(self, suit, val):
@@ -30,12 +34,18 @@ class BlackJack(commands.Cog):
         self.bot = bot
 
     @commands.command()
+    async def exitjack(self, ctx):
+        global gameMode
+        global gameActive
+        gameMode = "Exit"
+        gameActive = False
+
+    @commands.command()
     async def blackjack(self, ctx, bet: int):
         user = ctx.author
         await ctx.send(f'Starting a game of Blackjack...\n {user} has bet ${bet}')
-        global gameMode 
-        gameMode = 'Draw'
-        gameActive = True
+        global gameMode
+        global gameActive
         playerCards = []
 
         while gameActive:
@@ -98,6 +108,10 @@ class BlackJack(commands.Cog):
             if gameMode == 'Flip':
                 await ctx.send(f"\nGamemode = {gameMode}")
                 await ctx.send(f'Your Final Cards:\n{playerCards}\n')
+                break
+
+            if gameMode == 'Exit':
+                await ctx.send('Exiting Game')
                 break
 
 
