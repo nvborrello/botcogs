@@ -48,7 +48,7 @@ class BlackJack(commands.Cog):
 
         while gameActive:
             # Game mode when the game is just starting
-            if currentMode == 'Draw':
+            if gameMode == 'Draw':
                 # Draw 2 cards for the player
                 player = random.sample(deck, 2)
                 deck.remove(player[0])
@@ -84,7 +84,7 @@ class BlackJack(commands.Cog):
 
 
             # Game mode if the player decides to draw another card
-            if currentMode == 'Continue':
+            if gameMode == 'Continue':
                 # Draw another card
                 player = random.sample(deck, 1)
                 deck.remove(player[0])
@@ -105,12 +105,12 @@ class BlackJack(commands.Cog):
                     gameMode == 'Flip'
                     await ctx.send(f"\nGamemode = {gameMode}")
             
-            if currentMode == 'Flip':
+            if gameMode == 'Flip':
                 await ctx.send(f"\nGamemode = {gameMode}")
                 await ctx.send(f'Your Final Cards:\n{playerCards}\n')
                 break
 
-            if currentMode == 'Exit':
+            if gameMode == 'Exit':
                 await ctx.send(f"\nGamemode = {gameMode}")
                 await ctx.send('Exiting Game')
                 break
