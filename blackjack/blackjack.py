@@ -62,6 +62,8 @@ class BlackJack(commands.Cog):
 
         for card in deck:
             await ctx.send(card.toString())
+        
+        await ctx.send(len(deck))
 
         gameMode = 0
         rounds = 0
