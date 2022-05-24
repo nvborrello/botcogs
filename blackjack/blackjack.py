@@ -59,6 +59,8 @@ class BlackJack(commands.Cog):
     async def blackjack(self, ctx):
         user = ctx.author
         await ctx.send(f'Starting a game of Blackjack with {user}')
+        await ctx.send(deck)
+
         gameMode = 0
         rounds = 0
 
@@ -101,10 +103,6 @@ class BlackJack(commands.Cog):
 
                 hideList = [botList[0], '?']
                 currentSum = getsum(playerCards)
-
-                if currentSum > 21:
-                    gameMode = 3
-                    continue
 
                 # Send user their cards
                 await ctx.send(f'Your Cards:\n{stringList}\nTotal Value: {getsum(playerCards)}')
