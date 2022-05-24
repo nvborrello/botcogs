@@ -42,6 +42,7 @@ class BlackJack(commands.Cog):
         user = ctx.author
         await ctx.send(f'Starting a game of Blackjack with {user}')
         gameMode = 'Draw'
+        global gameActive
 
         playerCards = []
 
