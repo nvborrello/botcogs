@@ -16,8 +16,7 @@ class Card:
         self.value = val
 
     def toString(self):
-        matcher = self.value
-        match matcher:
+        match self.value:
             case 1:
                 return (f'Ace of {self.suit}')
             case 11:
