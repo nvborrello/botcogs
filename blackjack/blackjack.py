@@ -6,9 +6,10 @@ deck = []
 
 
 class Card:
-    def __init__(self, suit: str, val):
+    def __init__(self, suit: str, val, pts):
         self.suit = suit
         self.value = val
+        self.points = pts
 
     def toString(self):
         return (f'{self.value} of {self.suit}')
@@ -28,7 +29,10 @@ def getsum(cards):
 
 for s in ["Spades", "Clubs", "Diamonds", "Hearts"]:
     for v in range(1, 14):
-        deck.append(Card(s, v))
+        if v > 10:
+            deck.append(Card(s, v, 10))
+        else:
+            deck.append(Card(s, v, v))
 
 class BlackJack(commands.Cog):
     """My custom cog"""
