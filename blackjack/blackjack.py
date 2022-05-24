@@ -15,6 +15,7 @@ class Card:
 
 def getsum(cards):
     sum = 0
+    hasAce = False
     for card in cards:
         if isinstance(card.value, str):
             if card.value == 'Ace':
@@ -27,16 +28,7 @@ def getsum(cards):
 
 for s in ["Spades", "Clubs", "Diamonds", "Hearts"]:
     for v in range(1, 14):
-        if v == 1:
-            deck.append(Card(s, 'Ace'))
-        elif v == 11:
-            deck.append(Card(s, 'King'))
-        elif v == 12:
-            deck.append(Card(s, 'Queen'))
-        elif v == 13:
-            deck.append(Card(s, 'Jack'))
-        else:
-            deck.append(Card(s, v))
+        deck.append(Card(s, v))
 
 class BlackJack(commands.Cog):
     """My custom cog"""
@@ -173,7 +165,7 @@ class BlackJack(commands.Cog):
                 if botScore < 17:
                     while True:
                         # have the bot draw a card
-                        await ctx.send(f'My sum below 17, drawing again...')
+                        await ctx.send(f'*My sum below 17, drawing again...*')
                         bot = random.sample(deck, 1)
                         deck.remove(bot[0])
                         botCards.append(bot[0])
@@ -192,19 +184,19 @@ class BlackJack(commands.Cog):
                 playerFinal = getsum(playerCards) 
                 botFinal = getsum(botCards)
                 if botFinal > playerFinal:
-                    await ctx.send('You Lost :PogOFF:')
+                    await ctx.send('**You Lost...**')
                 else:
-                    await ctx.send('You win!')
+                    await ctx.send('**You win!**')
                 break
 
             # Player went over 21
             if gameMode == 3:
-                await ctx.send('You went over 21! You lose!')
+                await ctx.send('**You went over 21! You lose!**')
                 break
 
             # Bot went over 21
             if gameMode == 4:
-                await ctx.send('Bot went over 21! You win!')
+                await ctx.send('**Bot went over 21! You win!**')
                 break
 
 
