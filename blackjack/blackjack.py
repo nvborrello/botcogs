@@ -148,7 +148,7 @@ class BlackJack(commands.Cog):
                 # Send player their cards
                 playerClean = ', '.join(stringList)
                 await ctx.send(f'*You drew a {player[0].toString()}*')
-                await ctx.send(f'**Your Cards**:\n{playerClean}\nTotal Value: {getsum(playerCards)}')
+                await ctx.send(f'**Your Cards:**\n{playerClean}\nTotal Value: {getsum(playerCards)}\n\n**Bruno\'s Cards:**\n{botClean}\nTotal Value: ?')
 
                 if currentSum > 21:
                     gameMode = 3
