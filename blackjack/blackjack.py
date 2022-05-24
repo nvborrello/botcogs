@@ -11,21 +11,12 @@ deck = []
 
 
 class Card:
-    def __init__(self, suit: str, val: int):
+    def __init__(self, suit: str, val):
         self.suit = suit
         self.value = val
 
     def toString(self):
-        if self.value == 1:
-            return (f'Ace of {self.suit}')
-        if self.value == 11:
-            return (f'King of {self.suit}')
-        if self.value == 12:
-            return (f'Queen of {self.suit}')
-        if self.value == 13:
-            return (f'Jack of {self.suit}')
-        else:
-            return (f'{self.value} of {self.suit}')
+        return (f'{self.value} of {self.suit}')
 
 def getsum(cards):
     sum = 0
@@ -38,7 +29,16 @@ def getsum(cards):
 
 for s in ["Spades", "Clubs", "Diamonds", "Hearts"]:
     for v in range(1, 14):
-        deck.append(Card(s, v))
+        if v == 1:
+            deck.append(Card(s, 'Ace'))
+        if v == 11:
+            deck.append(Card(s, 'King'))
+        if v == 12:
+            deck.append(Card(s, 'Queen'))
+        if v == 13:
+            deck.append(Card(s, 'Jack'))
+        else:
+            deck.append(Card(s, v))
 
 class BlackJack(commands.Cog):
     """My custom cog"""
