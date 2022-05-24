@@ -35,7 +35,6 @@ class BlackJack(commands.Cog):
     @commands.command()
     async def exitjack(self, ctx):
         global gameActive
-        gameMode = "Exit"
         gameActive = False
 
     @commands.command()
