@@ -6,7 +6,7 @@ import time
 
 deck = []
 
-
+# Create a card with the suit, num/rank, and the point value
 class Card:
     def __init__(self, suit: str, val, pts):
         self.suit = suit
