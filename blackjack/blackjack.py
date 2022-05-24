@@ -111,6 +111,7 @@ class BlackJack(commands.Cog):
                 break
 
             if gameMode == 'Exit':
+                await ctx.send(f"\nGamemode = {gameMode}")
                 await ctx.send('Exiting Game')
                 break
 
