@@ -55,6 +55,7 @@ class BlackJack(commands.Cog):
     async def blackjack(self, ctx):
         user = ctx.author.mention
         await ctx.send(f'*Starting a game of Blackjack with {user}*')
+        time.sleep(3)
         
         gameMode = 0
         rounds = 0
@@ -167,6 +168,8 @@ class BlackJack(commands.Cog):
                 playerClean = ', '.join(stringList)
                 botClean = ', '.join(botList)
                 await ctx.send(f'**Your Cards:**\n{playerClean}\nTotal Value: {getsum(playerCards)}\n\n**Bruno\'s Cards:**\n{botClean}\nTotal Value: {getsum(botCards)}')
+
+                time.sleep(1)
 
                 # Have dealer draw if under 17
                 if botScore < 17:
