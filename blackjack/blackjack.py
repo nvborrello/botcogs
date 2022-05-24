@@ -3,8 +3,7 @@ from redbot.core import commands
 from discord.ext import tasks
 import random
 import time
-
-winloss = {}
+import economy
 
 deck = []
 
@@ -29,17 +28,29 @@ def getsum(cards):
         sum+=10
     return sum
 
-def updateDict(userID, winBool):
+# Grabs the user's money balance
+def getMoney(userID):
+    if userID in economy.money:
+        return economy.money[userID]
+    else:
+        economy.money.update({userID: 1000})
+        return 1000
+
+def updateWL(userID, winBool, bet):
     if winBool:
-        if userID in winloss:
-            winloss[userID]['Wins']+=1
+        if userID in economy.winloss:
+            economy.winloss[userID]['Wins']+=1
+            economy.money[userID]+=(bet*2)
         else:
-            winloss.update({userID: {'Wins': 1, 'Losses': 0}})
+            economy.winloss.update({userID: {'Wins': 1, 'Losses': 0}})
+            economy.money[userID]+=(bet*2)
     elif not winBool:
-        if userID in winloss:
-            winloss[userID]['Losses']+=1
+        if userID in economy.winloss:
+            economy.winloss[userID]['Losses']+=1
+            economy.money[userID]-=bet
         else:
-            winloss.update({userID: {'Wins': 0, 'Losses': 1}})
+            economy.winloss.update({userID: {'Wins': 0, 'Losses': 1}})
+            economy.money[userID]-=bet
 
 for s in ["Spades", "Clubs", "Diamonds", "Hearts"]:
     for v in range(1, 14):
@@ -55,7 +66,6 @@ for s in ["Spades", "Clubs", "Diamonds", "Hearts"]:
             deck.append(Card(s, v, v))
 
 class BlackJack(commands.Cog):
-    """My custom cog"""
 
     def __init__(self, bot):
         self.bot = bot
@@ -63,8 +73,8 @@ class BlackJack(commands.Cog):
     @commands.command()
     async def stats(self, ctx):
         userid = str(ctx.author.id)
-        wins = winloss[userid]['Wins']
-        losses = winloss[userid]['Losses']
+        wins = economy.winloss[userid]['Wins']
+        losses = economy.winloss[userid]['Losses']
         await ctx.send(f'You have {wins} wins and {losses} losses.')
 
     @commands.command()
@@ -74,10 +84,16 @@ class BlackJack(commands.Cog):
         await ctx.send('Stopped')
 
     @commands.command()
-    async def blackjack(self, ctx):
+    async def blackjack(self, ctx, bet: int):
         user = ctx.author.mention
         userid = str(ctx.author.id)
-        await ctx.send(f'*Starting a game of Blackjack with {user}*')
+        playerMoney = getMoney(userid)
+
+        if bet > playerMoney:
+            await ctx.send(f'*You can\'t bet more then your current balance (${playerMoney})!*')
+            return
+
+        await ctx.send(f'*{user} has bet ${bet}! Starting game...*')
         time.sleep(3)
         
         gameMode = 0
@@ -127,7 +143,7 @@ class BlackJack(commands.Cog):
                 playerClean = ', '.join(stringList)
                 botClean = ', '.join(hideList)
                 await ctx.send(f'***You drew a {player[0].toString()} and a {player[1].toString()}***')
-                await ctx.send(f'**Your Cards:**\n{playerClean}\nTotal Value: {getsum(playerCards)}\n\n**Bruno\'s Cards:**\n{botClean}\nTotal Value: ?')
+                await ctx.send(f'**Your Cards:**\n{playerClean}\nTotal Value: {getsum(playerCards)}\n\n**Bot\'s Cards:**\n{botClean}\nTotal Value: ?')
                 moreoma = ctx.author.id
                 message = await ctx.send("**Do you want to draw another card?**")
 
@@ -170,7 +186,7 @@ class BlackJack(commands.Cog):
                 # Send player their cards
                 playerClean = ', '.join(stringList)
                 await ctx.send(f'***You drew a {player[0].toString()}***')
-                await ctx.send(f'**Your Cards:**\n{playerClean}\nTotal Value: {getsum(playerCards)}\n\n**Bruno\'s Cards:**\n{botClean}\nTotal Value: ?')
+                await ctx.send(f'**Your Cards:**\n{playerClean}\nTotal Value: {getsum(playerCards)}\n\n**Bot\'s Cards:**\n{botClean}\nTotal Value: ?')
 
                 if currentSum > 21:
                     gameMode = 3
@@ -213,7 +229,7 @@ class BlackJack(commands.Cog):
                 # Send results
                 playerClean = ', '.join(stringList)
                 botClean = ', '.join(botList)
-                await ctx.send(f'**Your Cards:**\n{playerClean}\nTotal Value: {getsum(playerCards)}\n\n**Bruno\'s Cards:**\n{botClean}\nTotal Value: {getsum(botCards)}')
+                await ctx.send(f'**Your Cards:**\n{playerClean}\nTotal Value: {getsum(playerCards)}\n\n**Bot\'s Cards:**\n{botClean}\nTotal Value: {getsum(botCards)}')
 
                 time.sleep(2)
 
@@ -221,12 +237,12 @@ class BlackJack(commands.Cog):
                 if botScore < 17:
                     while True:
                         # have the bot draw a card
-                        await ctx.send(f'*Bruno\'s sum is below 17, drawing again...*')
+                        await ctx.send(f'*Bot\'s sum is below 17, drawing again...*')
                         time.sleep(2)
                         bot = random.sample(deck, 1)
                         deck.remove(bot[0])
                         botCards.append(bot[0])
-                        await ctx.send(f'*Bruno drew a {bot[0].toString()}*\nTotal Value: {getsum(botCards)}')
+                        await ctx.send(f'*Bot drew a {bot[0].toString()}*\nTotal Value: {getsum(botCards)}')
 
                         # Recalculate the bots score
                         botScore = getsum(botCards)
@@ -243,25 +259,25 @@ class BlackJack(commands.Cog):
                 playerFinal = getsum(playerCards) 
                 botFinal = getsum(botCards)
                 if botFinal > playerFinal:
-                    await ctx.send('**Bruno Wins!**')
-                    updateDict(userid, False)
+                    await ctx.send('**Bot Wins!**')
+                    updateWL(userid, False, bet)
                 elif botFinal < playerFinal:
                     await ctx.send('**You win!**')
-                    updateDict(userid, True)
+                    updateWL(userid, True, bet)
                 elif botFinal == playerFinal:
                     await ctx.send('**It\'s a Tie!**')
                 break
 
             # Player went over 21
             if gameMode == 3:
-                await ctx.send('**You went over 21! Bruno wins!**')
-                updateDict(userid, False)
+                await ctx.send('**You went over 21! Bot wins!**')
+                updateWL(userid, False, bet)
                 break
 
             # Bot went over 21
             if gameMode == 4:
-                await ctx.send('**Bruno went over 21! You win!**')
-                updateDict(userid, True)
+                await ctx.send('**Bot went over 21! You win!**')
+                updateWL(userid, True, bet)
                 break
 
 
