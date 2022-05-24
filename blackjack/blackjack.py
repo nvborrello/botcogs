@@ -90,11 +90,11 @@ class BlackJack(commands.Cog):
                 # Create a list for user's cards as strings
                 stringList = []
                 for card in playerCards:
-                    stringList.append(f'{card.value} of {card.suit}')
+                    stringList.append(card.toString())
                 # Create a list for bot's cards as strings
                 botList = []
                 for card in botCards:
-                    botList.append(f'{card.value} of {card.suit}')
+                    botList.append(card.toString())
 
                 hideList = [botList[0], '?']
 
@@ -124,7 +124,7 @@ class BlackJack(commands.Cog):
                 # Create a list for the cards as strings
                 stringList = []
                 for card in playerCards:
-                    stringList.append(f'{card.value} of {card.suit}')
+                    stringList.append(card.toString())
 
                 # Send player their cards
                 await ctx.send(f'Your Cards:\n{stringList}\nTotal Value: {getsum(playerCards)}')
