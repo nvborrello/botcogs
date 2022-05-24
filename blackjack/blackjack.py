@@ -4,6 +4,7 @@ from discord.ext import tasks
 import random
 import time
 
+plays = 0
 deck = []
 
 # Create a card with the suit, num/rank, and the point value
@@ -45,6 +46,10 @@ class BlackJack(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
+
+    @commands.command()
+    async def timesplayed(self, ctx):
+        await ctx.send(f'*Blackjack has been played {plays} times*')
 
     @commands.command()
     async def exitjack(self, ctx):
@@ -237,7 +242,8 @@ class BlackJack(commands.Cog):
             if gameMode == 4:
                 await ctx.send('**Bruno went over 21! You win!**')
                 break
-
+    global plays
+    plays+=1
 
 
 
