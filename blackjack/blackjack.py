@@ -29,8 +29,14 @@ def getsum(cards):
 
 for s in ["Spades", "Clubs", "Diamonds", "Hearts"]:
     for v in range(1, 14):
-        if v > 10:
-            deck.append(Card(s, v, 10))
+        if v == 1:
+            deck.append(Card(s, 'Ace', 1))
+        elif v == 11:
+            deck.append(Card(s, 'King', 10))
+        elif v == 12:
+            deck.append(Card(s, 'Queen', 10))
+        elif v == 13:
+            deck.append(Card(s, 'Jack', 10))
         else:
             deck.append(Card(s, v, v))
 
