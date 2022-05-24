@@ -82,6 +82,8 @@ class BlackJack(commands.Cog):
                     await ctx.send(f"\nGamemode = {gameMode}")
                 else:
                     gameMode == 'Flip'
+                    await ctx.send(f"\nGamemode = {gameMode}")
+
 
             # Game mode if the player decides to draw another card
             if gameMode == 'Continue':
@@ -103,6 +105,7 @@ class BlackJack(commands.Cog):
                     await ctx.send(f"\nGamemode = {gameMode}")
                 else:
                     gameMode == 'Flip'
+                    await ctx.send(f"\nGamemode = {gameMode}")
             
             if gameMode == 'Flip':
                 await ctx.send(f"\nGamemode = {gameMode}")
