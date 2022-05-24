@@ -3,7 +3,7 @@ from redbot.core import commands
 from discord.ext import tasks
 import random
 import time
-from economy import *
+import blackjack.economy
 deck = []
 
 # Create a card with the suit, num/rank, and the point value
@@ -29,27 +29,27 @@ def getsum(cards):
 
 # Grabs the user's money balance
 def getMoney(userID):
-    if userID in economy.money:
-        return economy.money[userID]
+    if userID in blackjack.economy.money:
+        return blackjack.economy.money[userID]
     else:
-        economy.money.update({userID: 1000})
+        blackjack.economy.money.update({userID: 1000})
         return 1000
 
 def updateWL(userID, winBool, bet):
     if winBool:
-        if userID in economy.winloss:
-            economy.winloss[userID]['Wins']+=1
-            economy.money[userID]+=(bet*2)
+        if userID in blackjack.economy.winloss:
+            blackjack.economy.winloss[userID]['Wins']+=1
+            blackjack.economy.money[userID]+=(bet*2)
         else:
-            economy.winloss.update({userID: {'Wins': 1, 'Losses': 0}})
-            economy.money[userID]+=(bet*2)
+            blackjack.economy.winloss.update({userID: {'Wins': 1, 'Losses': 0}})
+            blackjack.economy.money[userID]+=(bet*2)
     elif not winBool:
-        if userID in economy.winloss:
-            economy.winloss[userID]['Losses']+=1
-            economy.money[userID]-=bet
+        if userID in blackjack.economy.winloss:
+            blackjack.economy.winloss[userID]['Losses']+=1
+            blackjack.economy.money[userID]-=bet
         else:
-            economy.winloss.update({userID: {'Wins': 0, 'Losses': 1}})
-            economy.money[userID]-=bet
+            blackjack.economy.winloss.update({userID: {'Wins': 0, 'Losses': 1}})
+            blackjack.economy.money[userID]-=bet
 
 for s in ["Spades", "Clubs", "Diamonds", "Hearts"]:
     for v in range(1, 14):
@@ -72,8 +72,8 @@ class BlackJack(commands.Cog):
     @commands.command()
     async def stats(self, ctx):
         userid = str(ctx.author.id)
-        wins = economy.winloss[userid]['Wins']
-        losses = economy.winloss[userid]['Losses']
+        wins = blackjack.economy.winloss[userid]['Wins']
+        losses = blackjack.economy.winloss[userid]['Losses']
         await ctx.send(f'You have {wins} wins and {losses} losses.')
 
     @commands.command()
