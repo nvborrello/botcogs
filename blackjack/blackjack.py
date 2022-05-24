@@ -4,7 +4,8 @@ from discord.ext import tasks
 import random
 import time
 
-plays = 0
+winloss = {}
+
 deck = []
 
 # Create a card with the suit, num/rank, and the point value
@@ -28,6 +29,18 @@ def getsum(cards):
         sum+=10
     return sum
 
+def updateDict(userID, winBool):
+    if winBool:
+        if userID in winloss:
+            winloss[userID]['Wins']+=1
+        else:
+            winloss[userID]['Wins'] = 1
+    elif not winBool:
+        if userID in winloss:
+            winloss[userID]['Losses']+=1
+        else:
+            winloss[userID]['Losses'] = 1
+
 for s in ["Spades", "Clubs", "Diamonds", "Hearts"]:
     for v in range(1, 14):
         if v == 1:
@@ -48,8 +61,11 @@ class BlackJack(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def timesplayed(self, ctx):
-        await ctx.send(f'*Blackjack has been played {plays} times*')
+    async def stats(self, ctx):
+        userid = str(ctx.author.id)
+        wins = winloss[userid]['Wins']
+        losses = winloss[userid]['Losses']
+        await ctx.send(f'You have {wins} wins and {losses} losses.')
 
     @commands.command()
     async def exitjack(self, ctx):
@@ -60,6 +76,7 @@ class BlackJack(commands.Cog):
     @commands.command()
     async def blackjack(self, ctx):
         user = ctx.author.mention
+        userid = str(ctx.author.id)
         await ctx.send(f'*Starting a game of Blackjack with {user}*')
         time.sleep(3)
         
@@ -227,8 +244,10 @@ class BlackJack(commands.Cog):
                 botFinal = getsum(botCards)
                 if botFinal > playerFinal:
                     await ctx.send('**Bruno Wins!**')
+                    updateDict(userid, False)
                 elif botFinal < playerFinal:
                     await ctx.send('**You win!**')
+                    updateDict(userid, True)
                 elif botFinal == playerFinal:
                     await ctx.send('**It\'s a Tie!**')
                 break
@@ -236,14 +255,14 @@ class BlackJack(commands.Cog):
             # Player went over 21
             if gameMode == 3:
                 await ctx.send('**You went over 21! Bruno wins!**')
+                updateDict(userid, False)
                 break
 
             # Bot went over 21
             if gameMode == 4:
                 await ctx.send('**Bruno went over 21! You win!**')
+                updateDict(userid, True)
                 break
-    global plays
-    plays+=1
 
 
 
