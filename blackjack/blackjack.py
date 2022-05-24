@@ -50,10 +50,10 @@ def updateWL(userID, winBool, bet):
     elif not winBool:
         if userID in blackjack.economy.winloss:
             blackjack.economy.winloss[userID]['Losses']+=1
-            blackjack.economy.money[userID]-=bet
+            blackjack.economy.money[userID]
         else:
             blackjack.economy.winloss.update({userID: {'Wins': 0, 'Losses': 1}})
-            blackjack.economy.money[userID]-=bet
+            blackjack.economy.money[userID]
 
 for s in ["Spades", "Clubs", "Diamonds", "Hearts"]:
     for v in range(1, 14):
