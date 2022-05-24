@@ -1,3 +1,4 @@
+import asyncio
 from redbot.core import commands
 from discord.ext import tasks
 import random
@@ -105,9 +106,15 @@ class BlackJack(commands.Cog):
                 botClean = ', '.join(hideList)
                 await ctx.send(f'*You drew a {player[0].toString()} and a {player[1].toString()}*')
                 await ctx.send(f'**Your Cards:**\n{playerClean}\nTotal Value: {getsum(playerCards)}\n\n**Bruno\'s Cards:**\n{botClean}\nTotal Value: ?')
-                await ctx.send("\nWould you like to draw another card? (y/n)")
+                moreoma = ctx.author.id
+                message = await ctx.send("Do you want to draw another card?")
 
-                # Response Checker
+                emojis = ['<:nonatick:803586318369292289>', '<:RedTick:801684348502933525>']
+
+                # Adds reaction to above message
+                for emoji in (emojis):
+                    await message.add_reaction(emoji)
+
                 def check(reaction, user):
                     reacted = reaction.emoji
                     return user.id == moreoma and str(reaction.emoji) in emojis
@@ -120,8 +127,7 @@ class BlackJack(commands.Cog):
                     if str(reacted) == '<:nonatick:803586318369292289>':
                         gameMode = 1
                     elif reaction.emoji == '<:RedTick:801684348502933525>':
-                        gameMode = 2                
-
+                        gameMode = 2
             # Game mode if the player decides to draw another card
             if gameMode == 1:
                 # Draw another card
