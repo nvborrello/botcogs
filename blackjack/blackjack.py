@@ -1,8 +1,8 @@
 from glob import glob
+from tkinter.tix import Tree
 from redbot.core import commands
 from discord.ext import tasks
 import random
-import time
 
 deck = []
 gameMode = 'Draw'
@@ -45,7 +45,9 @@ class BlackJack(commands.Cog):
         user = ctx.author
         await ctx.send(f'Starting a game of Blackjack...\n {user} has bet ${bet}')
         global gameActive
+        gameActive = True
         global gameMode
+        gameMode = 'Draw'
 
         playerCards = []
 
@@ -79,11 +81,9 @@ class BlackJack(commands.Cog):
                 msg = await self.bot.wait_for('message', check=check)
                 
                 if msg.content.lower in ("y", "yes"):
-                    global gameMode
                     gameMode == 'Continue'
                     await ctx.send(f"\nGamemode = {gameMode}")
                 else:
-                    global gameMode
                     gameMode == 'Flip'
                     await ctx.send(f"\nGamemode = {gameMode}")
 
@@ -104,11 +104,9 @@ class BlackJack(commands.Cog):
                 msg = await self.bot.wait_for('message', check=check)
 
                 if msg.content.lower in ("y", "yes"):
-                    global gameMode
                     gameMode == 'Continue'
                     await ctx.send(f"\nGamemode = {gameMode}")
                 else:
-                    global gameMode
                     gameMode == 'Flip'
                     await ctx.send(f"\nGamemode = {gameMode}")
             
