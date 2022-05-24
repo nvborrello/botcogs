@@ -78,11 +78,10 @@ class BlackJack(commands.Cog):
                 
                 if msg.content.lower in ("y", "yes"):
                     gameMode == 'Continue'
-                    await ctx.send(f"\nGamemode = {gameMode}, it's supposed to be Continue")
+                    await ctx.send(f"\nYou said {msg.content.lower}, Gamemode = {gameMode}, it's supposed to be Continue")
                 else:
                     gameMode == 'Flip'
-                    await ctx.send(f"\nGamemode = {gameMode}")
-                    await ctx.send(f"\nGamemode = {gameMode}, it's supposed to be Flip")
+                    await ctx.send(f"\nYou said {msg.content.lower}, Gamemode = {gameMode}, it's supposed to be Flip")
 
 
             # Game mode if the player decides to draw another card
