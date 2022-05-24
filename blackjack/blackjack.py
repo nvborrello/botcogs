@@ -16,17 +16,16 @@ class Card:
         self.value = val
 
     def toString(self):
-        match self.value:
-            case 1:
-                return (f'Ace of {self.suit}')
-            case 11:
-                return (f'King of {self.suit}')
-            case 12:
-                return (f'Queen of {self.suit}')
-            case 13:
-                return (f'Jack of {self.suit}')
-            case _:
-                return (f'{self.value} of {self.suit}')
+        if self.value == 1:
+            return (f'Ace of {self.suit}')
+        if self.value == 11:
+            return (f'King of {self.suit}')
+        if self.value == 12:
+            return (f'Queen of {self.suit}')
+        if self.value == 13:
+            return (f'Jack of {self.suit}')
+        else:
+            return (f'{self.value} of {self.suit}')
 
 def getsum(cards):
     sum = 0
