@@ -101,7 +101,7 @@ class BlackJack(commands.Cog):
                 # Send user their cards
                 playerClean = ', '.join(stringList)
                 botClean = ', '.join(hideList)
-                await ctx.send(f'**Your Cards:**\n{playerClean}\nTotal Value: {getsum(playerCards)}\n\n**My Cards:**\n{botClean}\nTotal Value: {getsum(botCards)}')
+                await ctx.send(f'**Your Cards:**\n{playerClean}\nTotal Value: {getsum(playerCards)}\n\n**My Cards:**\n{botClean}\nTotal Value: ?')
                 await ctx.send("\nWould you like to draw another card? (y/n)")
 
                 # Response Checker
