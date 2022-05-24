@@ -196,8 +196,10 @@ class BlackJack(commands.Cog):
                 botFinal = getsum(botCards)
                 if botFinal > playerFinal:
                     await ctx.send('**You Lost...**')
-                else:
+                elif botFinal < playerFinal:
                     await ctx.send('**You win!**')
+                elif botFinal == playerFinal:
+                    await ctx.send('**It\'s a Tie!**')
                 break
 
             # Player went over 21
