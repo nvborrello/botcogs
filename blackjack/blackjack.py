@@ -49,8 +49,9 @@ class BlackJack(commands.Cog):
 
 
         playerCards = []
-        houseCards = []
+        botCards = []
         stringList = []
+        botList = []
 
         while gameActive:
             
@@ -68,17 +69,23 @@ class BlackJack(commands.Cog):
                 house = random.sample(deck, 2)
                 deck.remove(house[0])
                 deck.remove(house[1])
-                houseCards.append(house[0])
-                houseCards.append(house[1])
+                botCards.append(house[0])
+                botCards.append(house[1])
 
-                # Create a list for the cards as strings
+                # Create a list for user's cards as strings
                 stringList = []
                 for card in playerCards:
                     stringList.append(f'{card.value} of {card.suit}')
+                # Create a list for bot's cards as strings
+                botList = []
+                for card in botCards:
+                    botList.append(f'{card.value} of {card.suit}')
 
+                hideList = [botList[0], '?']
 
                 # Send user their cards
                 await ctx.send(f'Your Cards:\n{stringList}\nTotal Value: {getsum(playerCards)}')
+                await ctx.send(f'My Cards:\n{hideList}')
                 await ctx.send("\nWould you like to draw another card? (y/n)")
 
                 # Response Checker
@@ -121,7 +128,15 @@ class BlackJack(commands.Cog):
             
             # Game mode when the player no longer wants to draw another card
             if gameMode == 2:
+
+                # Create a list for the bot's cards as strings
+                stringList = []
+                for card in playerCards:
+                    stringList.append(f'{card.value} of {card.suit}')
+
+                # Send final results
                 await ctx.send(f'Your Final Cards:\n{stringList}\n')
+                await ctx.send(f'My Final Cards:\n{botList}\n')
                 break
 
 
