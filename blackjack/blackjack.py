@@ -22,7 +22,10 @@ def getsum(cards):
     sum = 0
     for card in cards:
         if isinstance(card.value, str):
-            sum+=10
+            if card.value == 'Ace':
+                sum+=11
+            else:
+                sum+=10
         else:
             sum+= card.value
     return sum
@@ -133,12 +136,13 @@ class BlackJack(commands.Cog):
 
                 currentSum = getsum(playerCards)
 
+                # Send player their cards
+                await ctx.send(f'Your Cards:\n{stringList}\nTotal Value: {getsum(playerCards)}')
+
                 if currentSum > 21:
                     gameMode = 3
                     continue
 
-                # Send player their cards
-                await ctx.send(f'Your Cards:\n{stringList}\nTotal Value: {getsum(playerCards)}')
                 await ctx.send("\nWould you like to draw another card? (y/n)")
 
                 def check(m):
@@ -176,6 +180,7 @@ class BlackJack(commands.Cog):
             # Player went over 21
             if gameMode == 3:
                 await ctx.send('You went over 21! You lose!')
+                break
 
 
 
