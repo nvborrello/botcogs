@@ -44,15 +44,14 @@ class BlackJack(commands.Cog):
     async def blackjack(self, ctx, bet: int):
         user = ctx.author
         await ctx.send(f'Starting a game of Blackjack...\n {user} has bet ${bet}')
-        global gameMode
         global gameActive
         playerCards = []
 
         while gameActive:
             # Game mode when the game is just starting
+            global gameMode
             if gameMode == 'Draw':
                 # Draw 2 cards for the player
-                await ctx.send(f"\nGamemode = {gameMode}")
                 player = random.sample(deck, 2)
                 deck.remove(player[0])
                 deck.remove(player[1])
@@ -71,7 +70,6 @@ class BlackJack(commands.Cog):
 
                 # Send user their cards
                 await ctx.send(f'Your Cards:\n{stringList}\nTotal Value: {getsum(playerCards)}')
-                time.sleep(1)
                 await ctx.send("\nWould you like to draw another card? (y/n)")
 
                 # Response Checker
@@ -81,13 +79,13 @@ class BlackJack(commands.Cog):
                 
                 if msg.content.lower in ("y", "yes"):
                     gameMode == 'Continue'
+                    await ctx.send(f"\nGamemode = {gameMode}")
                 else:
                     gameMode == 'Flip'
 
             # Game mode if the player decides to draw another card
             if gameMode == 'Continue':
                 # Draw another card
-                await ctx.send(f"\nGamemode = {gameMode}")
                 player = random.sample(deck, 1)
                 deck.remove(player[0])
                 playerCards.append(player[0].toString())
@@ -102,6 +100,7 @@ class BlackJack(commands.Cog):
 
                 if msg.content.lower in ("y", "yes"):
                     gameMode == 'Continue'
+                    await ctx.send(f"\nGamemode = {gameMode}")
                 else:
                     gameMode == 'Flip'
             
