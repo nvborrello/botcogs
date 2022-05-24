@@ -5,7 +5,6 @@ from discord.ext import tasks
 import random
 
 deck = []
-gameActive = True
 
 
 class Card:
@@ -36,13 +35,18 @@ class BlackJack(commands.Cog):
     async def exitjack(self, ctx):
         global gameActive
         gameActive = False
+        await ctx.send('Stopped')
 
     @commands.command()
     async def blackjack(self, ctx):
         user = ctx.author
         await ctx.send(f'Starting a game of Blackjack with {user}')
+        global gameMode
         gameMode = 'Draw'
+
         global gameActive
+        gameActive = True
+
 
         playerCards = []
 
