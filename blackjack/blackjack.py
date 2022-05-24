@@ -45,8 +45,8 @@ class BlackJack(commands.Cog):
                 player = random.sample(deck, 2)
                 deck.remove(player[0])
                 deck.remove(player[1])
-                playerCards.append(player[0].toString())
-                playerCards.append(player[1].toString())
+                playerCards.append(player[0])
+                playerCards.append(player[1])
 
                 house = random.sample(deck, 2)
                 deck.remove(house[0])
