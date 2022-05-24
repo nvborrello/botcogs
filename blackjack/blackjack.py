@@ -97,6 +97,11 @@ class BlackJack(commands.Cog):
                     botList.append(card.toString())
 
                 hideList = [botList[0], '?']
+                currentSum = getsum(playerCards)
+
+                if currentSum > 21:
+                    gameMode = 3
+                    continue
 
                 # Send user their cards
                 await ctx.send(f'Your Cards:\n{stringList}\nTotal Value: {getsum(playerCards)}')
@@ -125,6 +130,12 @@ class BlackJack(commands.Cog):
                 stringList = []
                 for card in playerCards:
                     stringList.append(card.toString())
+
+                currentSum = getsum(playerCards)
+
+                if currentSum > 21:
+                    gameMode = 3
+                    continue
 
                 # Send player their cards
                 await ctx.send(f'Your Cards:\n{stringList}\nTotal Value: {getsum(playerCards)}')
@@ -161,5 +172,11 @@ class BlackJack(commands.Cog):
                 else:
                     await ctx.send('You win!')
                 break
+
+            # Player went over 21
+            if gameMode == 3:
+                await ctx.send('You went over 21! You lose!')
+
+
 
 
