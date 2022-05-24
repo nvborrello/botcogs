@@ -59,7 +59,9 @@ class BlackJack(commands.Cog):
     async def blackjack(self, ctx):
         user = ctx.author
         await ctx.send(f'Starting a game of Blackjack with {user}')
-        await ctx.send(deck)
+
+        for card in deck:
+            await ctx.send(card.toString())
 
         gameMode = 0
         rounds = 0
