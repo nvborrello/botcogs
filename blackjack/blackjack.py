@@ -104,10 +104,10 @@ class BlackJack(commands.Cog):
                 # Send user their cards
                 playerClean = ', '.join(stringList)
                 botClean = ', '.join(hideList)
-                await ctx.send(f'*You drew a {player[0].toString()} and a {player[1].toString()}*')
+                await ctx.send(f'***You drew a {player[0].toString()} and a {player[1].toString()}***')
                 await ctx.send(f'**Your Cards:**\n{playerClean}\nTotal Value: {getsum(playerCards)}\n\n**Bruno\'s Cards:**\n{botClean}\nTotal Value: ?')
                 moreoma = ctx.author.id
-                message = await ctx.send("Do you want to draw another card?")
+                message = await ctx.send("**Do you want to draw another card?**")
 
                 emojis = ['✅', '❌']
 
@@ -147,7 +147,7 @@ class BlackJack(commands.Cog):
 
                 # Send player their cards
                 playerClean = ', '.join(stringList)
-                await ctx.send(f'*You drew a {player[0].toString()}*')
+                await ctx.send(f'***You drew a {player[0].toString()}***')
                 await ctx.send(f'**Your Cards:**\n{playerClean}\nTotal Value: {getsum(playerCards)}\n\n**Bruno\'s Cards:**\n{botClean}\nTotal Value: ?')
 
                 if currentSum > 21:
@@ -155,7 +155,7 @@ class BlackJack(commands.Cog):
                     continue
 
                 moreoma = ctx.author.id
-                message = await ctx.send("Do you want to draw another card?")
+                message = await ctx.send("**Do you want to draw another card?**")
 
                 emojis = ['✅', '❌']
 
