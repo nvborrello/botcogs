@@ -35,25 +35,22 @@ class BlackJack(commands.Cog):
 
     @commands.command()
     async def exitjack(self, ctx):
-        global gameMode
-        global gameActive
         gameMode = "Exit"
         gameActive = False
 
     @commands.command()
-    async def blackjack(self, ctx, bet: int):
+    async def blackjack(self, ctx):
         user = ctx.author
-        await ctx.send(f'Starting a game of Blackjack...\n {user} has bet ${bet}')
+        await ctx.send(f'Starting a game of Blackjack with {user}')
         global gameActive
-        gameActive = True
         global gameMode
-        gameMode = 'Draw'
 
         playerCards = []
 
         while gameActive:
             # Game mode when the game is just starting
-            if gameMode == 'Draw':
+            currentMode = gameMode
+            if currentMode == 'Draw':
                 # Draw 2 cards for the player
                 player = random.sample(deck, 2)
                 deck.remove(player[0])
@@ -89,7 +86,7 @@ class BlackJack(commands.Cog):
 
 
             # Game mode if the player decides to draw another card
-            if gameMode == 'Continue':
+            if currentMode == 'Continue':
                 # Draw another card
                 player = random.sample(deck, 1)
                 deck.remove(player[0])
@@ -110,12 +107,12 @@ class BlackJack(commands.Cog):
                     gameMode == 'Flip'
                     await ctx.send(f"\nGamemode = {gameMode}")
             
-            if gameMode == 'Flip':
+            if currentMode == 'Flip':
                 await ctx.send(f"\nGamemode = {gameMode}")
                 await ctx.send(f'Your Final Cards:\n{playerCards}\n')
                 break
 
-            if gameMode == 'Exit':
+            if currentMode == 'Exit':
                 await ctx.send(f"\nGamemode = {gameMode}")
                 await ctx.send('Exiting Game')
                 break
