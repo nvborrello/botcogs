@@ -169,13 +169,14 @@ class BlackJack(commands.Cog):
                 botClean = ', '.join(botList)
                 await ctx.send(f'**Your Cards:**\n{playerClean}\nTotal Value: {getsum(playerCards)}\n\n**Bruno\'s Cards:**\n{botClean}\nTotal Value: {getsum(botCards)}')
 
-                time.sleep(1)
+                time.sleep(2)
 
                 # Have dealer draw if under 17
                 if botScore < 17:
                     while True:
                         # have the bot draw a card
                         await ctx.send(f'*Bruno\'s sum is below 17, drawing again...*')
+                        time.sleep(2)
                         bot = random.sample(deck, 1)
                         deck.remove(bot[0])
                         botCards.append(bot[0])
@@ -186,6 +187,8 @@ class BlackJack(commands.Cog):
                         if botScore > 21 or botScore > 16:
                             break
                 
+                time.sleep(2)
+
                 if botScore > 21:
                     gameMode = 4
                     continue
