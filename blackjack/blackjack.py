@@ -33,6 +33,7 @@ class BlackJack(commands.Cog):
     async def blackjack(self, ctx, bet: int):
         user = ctx.author
         await ctx.send(f'Starting a game of Blackjack...\n {user} has bet ${bet}')
+        global gameMode 
         gameMode = 'Draw'
         gameActive = True
         playerCards = []
@@ -41,7 +42,7 @@ class BlackJack(commands.Cog):
             # Game mode when the game is just starting
             if gameMode == 'Draw':
                 # Draw 2 cards for the player
-                await ctx.send("\nGamemode = Draw")
+                await ctx.send(f"\nGamemode = {gameMode}")
                 player = random.sample(deck, 2)
                 deck.remove(player[0])
                 deck.remove(player[1])
@@ -76,7 +77,7 @@ class BlackJack(commands.Cog):
             # Game mode if the player decides to draw another card
             if gameMode == 'Continue':
                 # Draw another card
-                await ctx.send("\nGamemode = Continue")
+                await ctx.send(f"\nGamemode = {gameMode}")
                 player = random.sample(deck, 1)
                 deck.remove(player[0])
                 playerCards.append(player[0].toString())
@@ -95,7 +96,7 @@ class BlackJack(commands.Cog):
                     gameMode == 'Flip'
             
             if gameMode == 'Flip':
-                await ctx.send("\nGamemode = Flip")
+                await ctx.send(f"\nGamemode = {gameMode}")
                 await ctx.send(f'Your Final Cards:\n{playerCards}\n')
                 break
 
