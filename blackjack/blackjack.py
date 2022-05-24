@@ -13,6 +13,11 @@ class Card:
     def toString(self):
         return (f'{self.value} of {self.suit}')
     
+def getsum(cards):
+    sum = 0
+    for card in cards:
+        sum+= card.value
+    return sum
 
 for s in ["Spades", "Clubs", "Diamonds", "Hearts"]:
     for v in range(1, 14):
@@ -33,7 +38,9 @@ class BlackJack(commands.Cog):
         playerCards = []
 
         while gameActive:
+            # Game mode when the game is just starting
             if gameMode == 'Draw':
+                # Draw 2 cards for the player
                 player = random.sample(deck, 2)
                 deck.remove(player[0])
                 deck.remove(player[1])
@@ -44,11 +51,12 @@ class BlackJack(commands.Cog):
                 deck.remove(house[0])
                 deck.remove(house[1])
 
+                # Send user their cards
                 await ctx.send(f'Your Cards:\n{playerCards}\n')
                 time.sleep(1)
                 await ctx.send("\nWould you like to draw another card? (y/n)")
-                time.sleep(1)
 
+                # Response Checker
                 def check(m):
                     return m.author == ctx.author and m.channel == ctx.channel
                 msg = await self.bot.wait_for('message', check=check)
@@ -58,19 +66,25 @@ class BlackJack(commands.Cog):
                 else:
                     gameMode == 'Flip'
 
+            # Game mode if the player decides to draw another card
             if gameMode == 'Continue':
+                # Draw another card
                 player = random.sample(deck, 1)
                 deck.remove(player[0])
                 playerCards.append(player[0].toString())
-                await ctx.send(f'Your Cards:\n{playerCards}\n')
-                time.sleep(1)
+
+                # Send player their cards
+                await ctx.send(f'Your Cards:\n{playerCards}\nTotal Value: {getsum(playerCards)}')
                 await ctx.send("\nWould you like to draw another card? (y/n)")
-                time.sleep(1)
-                gameActive = False
-                # if msg.content == 'y' or 'Y':
-                #     gameMode == 'Continue'
-                # else:
-                #     gameMode == 'Flip'
+
+                def check(m):
+                    return m.author == ctx.author and m.channel == ctx.channel
+                msg = await self.bot.wait_for('message', check=check)
+
+                if msg.content == 'y' or 'Y':
+                    gameMode == 'Continue'
+                else:
+                    gameMode == 'Flip'
             
             if gameMode == 'Flip':
                 await ctx.send(f'Your Cards:\n{playerCards}\n')
