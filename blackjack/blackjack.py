@@ -84,10 +84,10 @@ class BlackJack(commands.Cog):
                 msg = await self.bot.wait_for('message', check=check)
                 
                 if msg.content in ("y", "yes"):
-                    gameMode == 1
+                    gameMode = 1
                     await ctx.send(f"\nYou said {msg.content}, Gamemode = {gameMode}, it's supposed to be Continue")
                 if msg.content in ("n", "no"):
-                    gameMode == 2
+                    gameMode = 2
                     await ctx.send(f"\nYou said {msg.content}, Gamemode = {gameMode}, it's supposed to be Flip")                
 
             # Game mode if the player decides to draw another card
@@ -108,10 +108,10 @@ class BlackJack(commands.Cog):
                 msg = await self.bot.wait_for('message', check=check)
 
                 if msg.content in ("y", "yes"):
-                    gameMode == 1
+                    gameMode = 1
                     await ctx.send(f"\nYou said {msg.content}, Gamemode = {gameMode}, it's supposed to be Continue")
                 if msg.content in ("n", "no"):
-                    gameMode == 2
+                    gameMode = 2
                     await ctx.send(f"\nYou said {msg.content}, Gamemode = {gameMode}, it's supposed to be Flip")
             
             # Game mode when the player no longer wants to draw another card
