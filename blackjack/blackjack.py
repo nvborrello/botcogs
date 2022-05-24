@@ -143,7 +143,7 @@ class BlackJack(commands.Cog):
                 # Determine Winner
                 playerFinal = getsum(playerCards) 
                 botFinal = getsum(botCards)
-                if botFinal > player:
+                if botFinal > playerFinal:
                     await ctx.send('You Lost :PogOFF:')
                 else:
                     await ctx.send('You Win!')
