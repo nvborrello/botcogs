@@ -121,6 +121,7 @@ class BlackJack(commands.Cog):
             
             # Game mode when the player no longer wants to draw another card
             if gameMode == 2:
+                await ctx.send(f'Your Final Cards:\n{stringList}\n')
                 break
 
 
