@@ -120,7 +120,7 @@ class BlackJack(commands.Cog):
                     return user.id == moreoma and str(reaction.emoji) in emojis
 
                 try:
-                    reaction, user = await self.bot.wait_for('reaction_add', timeout=10, check=check)
+                    reaction, user = await self.bot.wait_for('reaction_add', timeout=30, check=check)
                 except asyncio.TimeoutError:
                     await ctx.send("*timed out*")
                     break
@@ -168,7 +168,7 @@ class BlackJack(commands.Cog):
                     return user.id == moreoma and str(reaction.emoji) in emojis
 
                 try:
-                    reaction, user = await self.bot.wait_for('reaction_add', timeout=10, check=check)
+                    reaction, user = await self.bot.wait_for('reaction_add', timeout=30, check=check)
                 except asyncio.TimeoutError:
                     await ctx.send("*timed out*")
                     break
