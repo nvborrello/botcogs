@@ -125,9 +125,9 @@ class BlackJack(commands.Cog):
                     await ctx.send("*timed out*")
                     break
                 else:
-                    if reaction.emoji == '<:nonatick:803586318369292289>':
+                    if reaction.emoji == '✅':
                         gameMode = 1
-                    elif reaction.emoji == '<:RedTick:801684348502933525>':
+                    elif reaction.emoji == '❌':
                         gameMode = 2
                         
             # Game mode if the player decides to draw another card
