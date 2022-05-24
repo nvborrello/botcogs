@@ -147,7 +147,7 @@ class BlackJack(commands.Cog):
                 # Create a list for the bot's cards as strings
                 stringList = []
                 for card in playerCards:
-                    stringList.append(f'{card.value} of {card.suit}')
+                    stringList.append(card.toString())
 
                 # Send final results
                 await ctx.send(f'Your Final Cards:\n{stringList}\n')
