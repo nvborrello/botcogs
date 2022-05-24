@@ -49,23 +49,27 @@ class BlackJack(commands.Cog):
 
 
         playerCards = []
+        houseCards = []
+        stringList = []
 
         while gameActive:
             
             # Game mode when the game is just starting
             if gameMode == 0:
-                # Draw 2 cards for the player
-                rounds+=1
-                await ctx.send(f'Round {rounds}\n')
+
+                # Draw player's cards
                 player = random.sample(deck, 2)
                 deck.remove(player[0])
                 deck.remove(player[1])
                 playerCards.append(player[0])
                 playerCards.append(player[1])
 
+                # Draw house's cards
                 house = random.sample(deck, 2)
                 deck.remove(house[0])
                 deck.remove(house[1])
+                houseCards.append(house[0])
+                houseCards.append(house[1])
 
                 # Create a list for the cards as strings
                 stringList = []
@@ -84,22 +88,24 @@ class BlackJack(commands.Cog):
                 
                 if msg.content in ("y", "yes"):
                     gameMode = 1
-                    await ctx.send(f"\nYou said {msg.content}, Gamemode = {gameMode}, it's supposed to be Continue")
                 if msg.content in ("n", "no"):
                     gameMode = 2
-                    await ctx.send(f"\nYou said {msg.content}, Gamemode = {gameMode}, it's supposed to be Flip")                
 
             # Game mode if the player decides to draw another card
             if gameMode == 1:
                 # Draw another card
-                rounds+=1
-                await ctx.send(f'Round {rounds}')
+
                 player = random.sample(deck, 1)
                 deck.remove(player[0])
-                playerCards.append(player[0].toString())
+                playerCards.append(player[0])
+
+                # Create a list for the cards as strings
+                stringList = []
+                for card in playerCards:
+                    stringList.append(f'{card.value} of {card.suit}')
 
                 # Send player their cards
-                await ctx.send(f'Your Cards:\n{playerCards}\nTotal Value: {getsum(playerCards)}')
+                await ctx.send(f'Your Cards:\n{stringList}\nTotal Value: {getsum(playerCards)}')
                 await ctx.send("\nWould you like to draw another card? (y/n)")
 
                 def check(m):
@@ -107,18 +113,14 @@ class BlackJack(commands.Cog):
                 msg = await self.bot.wait_for('message', check=check)
 
                 if msg.content in ("y", "yes"):
+                    # Stay in mode 1
                     gameMode = 1
-                    await ctx.send(f"\nYou said {msg.content}, Gamemode = {gameMode}, it's supposed to be Continue")
                 if msg.content in ("n", "no"):
+                    # Flip the cards
                     gameMode = 2
-                    await ctx.send(f"\nYou said {msg.content}, Gamemode = {gameMode}, it's supposed to be Flip")
             
             # Game mode when the player no longer wants to draw another card
             if gameMode == 2:
-                rounds+=1
-                await ctx.send(f'Round {rounds}')
-                await ctx.send(f"\nGamemode = {gameMode}")
-                await ctx.send(f'Your Final Cards:\n{playerCards}\n')
                 break
 
 
