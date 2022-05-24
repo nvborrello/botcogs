@@ -34,11 +34,11 @@ for s in ["Spades", "Clubs", "Diamonds", "Hearts"]:
     for v in range(1, 14):
         if v == 1:
             deck.append(Card(s, 'Ace'))
-        if v == 11:
+        elif v == 11:
             deck.append(Card(s, 'King'))
-        if v == 12:
+        elif v == 12:
             deck.append(Card(s, 'Queen'))
-        if v == 13:
+        elif v == 13:
             deck.append(Card(s, 'Jack'))
         else:
             deck.append(Card(s, v))
