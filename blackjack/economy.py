@@ -2,7 +2,6 @@
 
 from glob import glob
 
-
 def init():
     global winloss
     winloss = {}
