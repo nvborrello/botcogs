@@ -109,7 +109,7 @@ class BlackJack(commands.Cog):
                 moreoma = ctx.author.id
                 message = await ctx.send("Do you want to draw another card?")
 
-                emojis = ['<:nonatick:803586318369292289>', '<:RedTick:801684348502933525>']
+                emojis = ['✅', '❌']
 
                 # Adds reaction to above message
                 for emoji in (emojis):
@@ -122,12 +122,13 @@ class BlackJack(commands.Cog):
                 try:
                     reaction, user = await self.bot.wait_for('reaction_add', timeout=10, check=check)
                 except asyncio.TimeoutError:
-                    await ctx.send("timeout")
+                    await ctx.send("*timed out*")
                 else:
-                    if str(reacted) == '<:nonatick:803586318369292289>':
+                    if reaction.emoji == '<:nonatick:803586318369292289>':
                         gameMode = 1
                     elif reaction.emoji == '<:RedTick:801684348502933525>':
                         gameMode = 2
+                        
             # Game mode if the player decides to draw another card
             if gameMode == 1:
                 # Draw another card
