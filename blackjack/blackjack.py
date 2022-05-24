@@ -81,13 +81,14 @@ class BlackJack(commands.Cog):
                     return m.author == ctx.author and m.channel == ctx.channel
                 msg = await self.bot.wait_for('message', check=check)
 
-                if msg.content == 'y' or 'Y':
+                if msg.content.lower in ("y", "yes"):
                     gameMode == 'Continue'
                 else:
                     gameMode == 'Flip'
             
             if gameMode == 'Flip':
-                await ctx.send(f'Your Cards:\n{playerCards}\n')
+                await ctx.send(f'Your Final Cards:\n{playerCards}\n')
+                break
 
 
 
