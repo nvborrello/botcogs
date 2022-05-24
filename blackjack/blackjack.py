@@ -41,8 +41,8 @@ class BlackJack(commands.Cog):
     async def blackjack(self, ctx):
         user = ctx.author
         await ctx.send(f'Starting a game of Blackjack with {user}')
-        global gameMode
         gameMode = 'Draw'
+        rounds = 0
 
         global gameActive
         gameActive = True
@@ -51,6 +51,8 @@ class BlackJack(commands.Cog):
         playerCards = []
 
         while gameActive:
+            rounds+=1
+            await ctx.send(f'Round {rounds}')
             # Game mode when the game is just starting
             if gameMode == 'Draw':
                 # Draw 2 cards for the player
@@ -81,11 +83,10 @@ class BlackJack(commands.Cog):
                 
                 if msg.content in ("y", "yes"):
                     gameMode == 'Continue'
-                    await ctx.send(f"\nYou said {msg.content.lower}, Gamemode = {gameMode}, it's supposed to be Continue")
-                else:
+                    await ctx.send(f"\nYou said {msg.content}, Gamemode = {gameMode}, it's supposed to be Continue")
+                if msg.content in ("n", "no"):
                     gameMode == 'Flip'
-                    await ctx.send(f"\nYou said {msg.content.lower}, Gamemode = {gameMode}, it's supposed to be Flip")
-
+                    await ctx.send(f"\nYou said {msg.content}, Gamemode = {gameMode}, it's supposed to be Flip")                
 
             # Game mode if the player decides to draw another card
             if gameMode == 'Continue':
@@ -104,22 +105,15 @@ class BlackJack(commands.Cog):
 
                 if msg.content in ("y", "yes"):
                     gameMode == 'Continue'
-                    await ctx.send(f"\nGamemode = {gameMode}")
-                else:
+                    await ctx.send(f"\nYou said {msg.content}, Gamemode = {gameMode}, it's supposed to be Continue")
+                if msg.content in ("n", "no"):
                     gameMode == 'Flip'
-                    await ctx.send(f"\nGamemode = {gameMode}")
+                    await ctx.send(f"\nYou said {msg.content}, Gamemode = {gameMode}, it's supposed to be Flip")
             
+            # Game mode when the player no longer wants to draw another card
             if gameMode == 'Flip':
                 await ctx.send(f"\nGamemode = {gameMode}")
                 await ctx.send(f'Your Final Cards:\n{playerCards}\n')
                 break
 
-            if gameMode == 'Exit':
-                await ctx.send(f"\nGamemode = {gameMode}")
-                await ctx.send('Exiting Game')
-                break
 
-
-
-
-       
