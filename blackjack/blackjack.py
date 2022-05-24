@@ -165,9 +165,6 @@ class BlackJack(commands.Cog):
                 playerClean = ', '.join(stringList)
                 botClean = ', '.join(botList)
                 await ctx.send(f'**Your Cards:**\n{playerClean}\nTotal Value: {getsum(playerCards)}\n\n**My Cards:**\n{botClean}\nTotal Value: {getsum(botCards)}')
-                if botScore > 21:
-                    gameMode = 4
-                    continue
 
                 # Have dealer draw if under 17
                 if botScore < 17:
@@ -181,12 +178,12 @@ class BlackJack(commands.Cog):
 
                         # Recalculate the bots score
                         botScore = getsum(botCards)
-                        if botScore > 21:
-                            gameMode = 4
+                        if botScore > 21 or botScore > 16:
                             break
-                        elif botScore > 16:
-                            break
-
+                
+                if botScore > 21:
+                    gameMode = 4
+                    continue
 
                 # Determine Winner
                 playerFinal = getsum(playerCards) 
