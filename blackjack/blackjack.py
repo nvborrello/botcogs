@@ -123,6 +123,7 @@ class BlackJack(commands.Cog):
                     reaction, user = await self.bot.wait_for('reaction_add', timeout=10, check=check)
                 except asyncio.TimeoutError:
                     await ctx.send("*timed out*")
+                    break
                 else:
                     if reaction.emoji == '<:nonatick:803586318369292289>':
                         gameMode = 1
