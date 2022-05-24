@@ -108,14 +108,19 @@ class BlackJack(commands.Cog):
                 await ctx.send("\nWould you like to draw another card? (y/n)")
 
                 # Response Checker
-                def check(m):
-                    return m.author == ctx.author and m.channel == ctx.channel
-                msg = await self.bot.wait_for('message', check=check)
-                
-                if msg.content in ("y", "yes"):
-                    gameMode = 1
-                if msg.content in ("n", "no"):
-                    gameMode = 2
+                def check(reaction, user):
+                    reacted = reaction.emoji
+                    return user.id == moreoma and str(reaction.emoji) in emojis
+
+                try:
+                    reaction, user = await self.bot.wait_for('reaction_add', timeout=10, check=check)
+                except asyncio.TimeoutError:
+                    await ctx.send("timeout")
+                else:
+                    if str(reacted) == '<:nonatick:803586318369292289>':
+                        gameMode = 1
+                    elif reaction.emoji == '<:RedTick:801684348502933525>':
+                        gameMode = 2                
 
             # Game mode if the player decides to draw another card
             if gameMode == 1:
