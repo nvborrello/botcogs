@@ -154,18 +154,29 @@ class BlackJack(commands.Cog):
                     gameMode = 3
                     continue
 
-                await ctx.send("\nWould you like to draw another card? (y/n)")
+                moreoma = ctx.author.id
+                message = await ctx.send("Do you want to draw another card?")
 
-                def check(m):
-                    return m.author == ctx.author and m.channel == ctx.channel
-                msg = await self.bot.wait_for('message', check=check)
+                emojis = ['✅', '❌']
 
-                if msg.content in ("y", "yes"):
-                    # Stay in mode 1
-                    gameMode = 1
-                if msg.content in ("n", "no"):
-                    # Flip the cards
-                    gameMode = 2
+                # Adds reaction to above message
+                for emoji in (emojis):
+                    await message.add_reaction(emoji)
+
+                def check(reaction, user):
+                    reacted = reaction.emoji
+                    return user.id == moreoma and str(reaction.emoji) in emojis
+
+                try:
+                    reaction, user = await self.bot.wait_for('reaction_add', timeout=10, check=check)
+                except asyncio.TimeoutError:
+                    await ctx.send("*timed out*")
+                    break
+                else:
+                    if reaction.emoji == '✅':
+                        gameMode = 1
+                    elif reaction.emoji == '❌':
+                        gameMode = 2
             
             # Game mode when the player no longer wants to draw another card
             if gameMode == 2:
