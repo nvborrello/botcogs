@@ -1,5 +1,7 @@
 from glob import glob
 from tkinter.tix import Tree
+from turtle import getshapes
+from webbrowser import get
 from redbot.core import commands
 from discord.ext import tasks
 import random
@@ -137,6 +139,14 @@ class BlackJack(commands.Cog):
                 # Send final results
                 await ctx.send(f'Your Final Cards:\n{stringList}\n')
                 await ctx.send(f'My Final Cards:\n{botList}\n')
+
+                # Determine Winner
+                playerFinal = getsum(playerCards) 
+                botFinal = getsum(botCards)
+                if botFinal > player:
+                    await ctx.send('You Lost :PogOFF:')
+                else:
+                    await ctx.send('You Win!')
                 break
 
 
