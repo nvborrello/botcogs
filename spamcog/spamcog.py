@@ -2,7 +2,6 @@ from redbot.core import commands
 from discord.ext import tasks
 
 class SpamCog(commands.Cog):
-    """My custom cog"""
 
     def __init__(self, bot):
         self.bot = bot
