@@ -1,3 +1,4 @@
+from email.policy import default
 from glob import glob
 from tkinter.tix import Tree
 from turtle import getshapes
@@ -15,12 +16,25 @@ class Card:
         self.value = val
 
     def toString(self):
-        return (f'{self.value} of {self.suit}')
-    
+        match self.value:
+            case 1:
+                return (f'Ace of {self.suit}')
+            case 11:
+                return (f'King of {self.suit}')
+            case 12:
+                return (f'Queen of {self.suit}')
+            case 13:
+                return (f'Jack of {self.suit}')
+            case _:
+                return (f'{self.value} of {self.suit}')
+
 def getsum(cards):
     sum = 0
     for card in cards:
-        sum+= card.value
+        if isinstance(card.value, str):
+            sum+=10
+        else:
+            sum+= card.value
     return sum
 
 for s in ["Spades", "Clubs", "Diamonds", "Hearts"]:
@@ -146,7 +160,7 @@ class BlackJack(commands.Cog):
                 if botFinal > playerFinal:
                     await ctx.send('You Lost :PogOFF:')
                 else:
-                    await ctx.send('You Win!')
+                    await ctx.send('You win!')
                 break
 
 
