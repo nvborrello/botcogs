@@ -4,7 +4,11 @@ from discord.ext import tasks
 import random
 import time
 import blackjack.economy
+
 deck = []
+
+# init the globals
+blackjack.economy.init()
 
 # Create a card with the suit, num/rank, and the point value
 class Card:
@@ -75,18 +79,18 @@ class BlackJack(commands.Cog):
         wins = blackjack.economy.winloss[userid]['Wins']
         losses = blackjack.economy.winloss[userid]['Losses']
         await ctx.send(f'You have {wins} wins and {losses} losses.')
-
+    
     @commands.command()
-    async def exitjack(self, ctx):
-        global gameActive
-        gameActive = False
-        await ctx.send('Stopped')
+    async def money(self, ctx):
+        userid = str(ctx.author.id)
+        money = getMoney(userid)
+        await ctx.send(f'You have ${money}.')
 
     @commands.command()
     async def blackjack(self, ctx, bet: int):
         user = ctx.author.mention
         userid = str(ctx.author.id)
-        playerMoney = getMoney(userid)
+        playerMoney = getMoney(userid)        
 
         if bet > playerMoney:
             await ctx.send(f'*You can\'t bet more then your current balance (${playerMoney})!*')
@@ -94,6 +98,9 @@ class BlackJack(commands.Cog):
 
         await ctx.send(f'*{user} has bet ${bet}! Starting game...*')
         time.sleep(3)
+
+        # Take out bet money
+        blackjack.economy.money[userid]-=bet
         
         gameMode = 0
         rounds = 0
@@ -265,6 +272,7 @@ class BlackJack(commands.Cog):
                     updateWL(userid, True, bet)
                 elif botFinal == playerFinal:
                     await ctx.send('**It\'s a Tie!**')
+                    blackjack.economy.money[userid]+=bet
                 break
 
             # Player went over 21
