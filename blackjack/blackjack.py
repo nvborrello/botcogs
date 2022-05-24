@@ -3,8 +3,7 @@ from redbot.core import commands
 from discord.ext import tasks
 import random
 import time
-import economy
-
+from economy import *
 deck = []
 
 # Create a card with the suit, num/rank, and the point value
