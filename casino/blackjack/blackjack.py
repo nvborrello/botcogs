@@ -3,12 +3,10 @@ from redbot.core import commands
 from discord.ext import tasks
 import random
 import time
-import blackjack.economy
-
-deck = []
+import casino.economy as economy
 
 # init the globals
-blackjack.economy.init()
+economy.init()
 
 # Create a card with the suit, num/rank, and the point value
 class Card:
@@ -20,6 +18,7 @@ class Card:
     def toString(self):
         return (f'{self.value} of {self.suit}')
 
+# gets the sum of all cards in a list
 def getsum(cards):
     sum = 0
     hasAce = False
@@ -33,28 +32,31 @@ def getsum(cards):
 
 # Grabs the user's money balance
 def getMoney(userID):
-    if userID in blackjack.economy.money:
-        return blackjack.economy.money[userID]
+    if userID in economy.money:
+        return economy.money[userID]
     else:
-        blackjack.economy.money.update({userID: 1000})
+        economy.money.update({userID: 1000})
         return 1000
 
+# Updates the wins, losses, and money of the user
 def updateWL(userID, winBool, bet):
     if winBool:
-        if userID in blackjack.economy.winloss:
-            blackjack.economy.winloss[userID]['Wins']+=1
-            blackjack.economy.money[userID]+=(bet*2)
+        if userID in economy.winloss:
+            economy.winloss[userID]['Wins']+=1
+            economy.money[userID]+=(bet*2)
         else:
-            blackjack.economy.winloss.update({userID: {'Wins': 1, 'Losses': 0}})
-            blackjack.economy.money[userID]+=(bet*2)
+            economy.winloss.update({userID: {'Wins': 1, 'Losses': 0}})
+            economy.money[userID]+=(bet*2)
     elif not winBool:
-        if userID in blackjack.economy.winloss:
-            blackjack.economy.winloss[userID]['Losses']+=1
-            blackjack.economy.money[userID]
+        if userID in economy.winloss:
+            economy.winloss[userID]['Losses']+=1
+            economy.money[userID]-=bet
         else:
-            blackjack.economy.winloss.update({userID: {'Wins': 0, 'Losses': 1}})
-            blackjack.economy.money[userID]
+            economy.winloss.update({userID: {'Wins': 0, 'Losses': 1}})
+            economy.money[userID]-=bet
 
+# Creates the deck of cards
+deck = []
 for s in ["Spades", "Clubs", "Diamonds", "Hearts"]:
     for v in range(1, 14):
         if v == 1:
@@ -76,8 +78,8 @@ class BlackJack(commands.Cog):
     @commands.command()
     async def stats(self, ctx):
         userid = str(ctx.author.id)
-        wins = blackjack.economy.winloss[userid]['Wins']
-        losses = blackjack.economy.winloss[userid]['Losses']
+        wins = economy.winloss[userid]['Wins']
+        losses = economy.winloss[userid]['Losses']
         await ctx.send(f'You have {wins} wins and {losses} losses.')
     
     @commands.command()
@@ -100,7 +102,7 @@ class BlackJack(commands.Cog):
         time.sleep(3)
 
         # Take out bet money
-        blackjack.economy.money[userid]-=bet
+        economy.money[userid]-=bet
         
         gameMode = 0
         rounds = 0
@@ -272,7 +274,7 @@ class BlackJack(commands.Cog):
                     updateWL(userid, True, bet)
                 elif botFinal == playerFinal:
                     await ctx.send('**It\'s a Tie!**')
-                    blackjack.economy.money[userid]+=bet
+                    economy.money[userid]+=bet
                 break
 
             # Player went over 21

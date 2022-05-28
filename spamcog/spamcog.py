@@ -2,7 +2,7 @@ from redbot.core import commands
 from discord.ext import tasks
 
 class SpamCog(commands.Cog):
-
+    # Spam any message you want in the chat
     def __init__(self, bot):
         self.bot = bot
 
