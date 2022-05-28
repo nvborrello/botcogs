@@ -1,4 +1,3 @@
-from games.slots import Slots
 from .blackjack import BlackJack
 
 

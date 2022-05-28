@@ -4,7 +4,7 @@ from redbot.core import commands
 from discord.ext import tasks
 import random
 import time
-import economy as economy
+import slots.economy as economy
 
 # init the globals and other stuff
 economy.init()
@@ -20,7 +20,8 @@ class Wheels:
     def spin(self):
         spins = []
         for x in range(self.n):
-            spins.append(random.choice(self.symbols, 1))
+            choice = random.choice(self.symbols)
+            spins.append(choice)
         return spins
 
 # Create the wheels for the machine
@@ -33,6 +34,10 @@ def getMoney(userID):
     else:
         economy.money.update({userID: 1000})
         return 1000
+
+def getScore(spins):
+    if spins[0] == spins[1] == spins[2]:
+        
 
 class Slots(commands.Cog):
 
@@ -53,7 +58,7 @@ class Slots(commands.Cog):
         await ctx.send(f'You have ${money}.')
 
     @commands.command()
-    async def blackjack(self, ctx, bet: int):
+    async def slots(self, ctx, bet: int):
         user = ctx.author.mention
         userid = str(ctx.author.id)
         playerMoney = getMoney(userid)        
@@ -82,6 +87,8 @@ class Slots(commands.Cog):
                 # Spin the wheels
                 spins = machine.spin()
                 await ctx.send(f'*You spun {spins}*')
+
+
 
                 # Show user the wheels
                 await ctx.send(f'***Spin test***')
