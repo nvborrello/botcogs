@@ -4,7 +4,7 @@ from redbot.core import commands
 from discord.ext import tasks
 import random
 import time
-import casino.economy as economy
+import economy as economy
 
 # init the globals and other stuff
 economy.init()
@@ -112,3 +112,4 @@ class Slots(commands.Cog):
             # Game mode if the player decides to not spin again
             if gameMode == 1:
                 # Exits the spin loop
+                return

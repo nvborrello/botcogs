@@ -3,7 +3,7 @@ from redbot.core import commands
 from discord.ext import tasks
 import random
 import time
-import casino.economy as economy
+import economy as economy
 
 # init the globals
 economy.init()
